@@ -1,0 +1,14 @@
+{
+  "id": 1,
+  "name": "sys_process_getpid",
+  "returns": "sys_pid_t",
+  "params": [],
+  "brief": "Gets the PID of the current process",
+  "class": "sys_process",
+  "firmwares": [
+    "DECR",
+    "DEX",
+    "CEX"
+  ],
+  "flags": []
+}

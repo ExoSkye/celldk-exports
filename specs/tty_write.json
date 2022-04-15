@@ -1,0 +1,35 @@
+{
+  "id": 403,
+  "name": "sys_tty_write",
+  "returns": "s32",
+  "params": [
+    {
+      "name": "ch",
+      "type": "u32",
+      "description": "The TTY channel to write to"
+    },
+    {
+      "name": "buf",
+      "type": "const void*",
+      "description": "The buffer to write to the tty"
+    },
+    {
+      "name": "len",
+      "type": "u32",
+      "description": "The length of `buf`"
+    },
+    {
+      "name": "preadlen",
+      "type": "u32*",
+      "description": "Pointer to an u32 to put the amount of data written"
+    }
+  ],
+  "brief": "Write to the tty",
+  "class": "sys_tty",
+  "firmwares": [
+    "DECR",
+    "DEX",
+    "CEX"
+  ],
+  "flags": []
+}

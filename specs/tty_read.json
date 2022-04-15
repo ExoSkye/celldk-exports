@@ -1,0 +1,35 @@
+{
+  "id": 402,
+  "name": "sys_tty_read",
+  "returns": "s32",
+  "params": [
+    {
+      "name": "ch",
+      "type": "u32",
+      "description": "The TTY channel to read from"
+    },
+    {
+      "name": "buf",
+      "type": "void*",
+      "description": "The buffer to read into"
+    },
+    {
+      "name": "len",
+      "type": "u32",
+      "description": "The length of `buf`"
+    },
+    {
+      "name": "preadlen",
+      "type": "u32*",
+      "description": "Pointer to an u32 to put the amount of data read"
+    }
+  ],
+  "brief": "Read from the tty",
+  "class": "sys_tty",
+  "firmwares": [
+    "DECR",
+    "DEX",
+    "CEX"
+  ],
+  "flags": []
+}

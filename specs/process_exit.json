@@ -1,0 +1,1 @@
+{"name": "sys_process_exit", "id": 3, "returns": "int", "brief": "Exits the current process", "class": "sys_process", "params": [{"name": "ret", "type": "int", "description": "The return value"}], "flags": [], "firmwares": ["CEX", "DEX", "DECR"]}
