@@ -53,7 +53,7 @@ def c_generator():
                         else:
                             requirements += "To use this syscall, the caller process must have any of these flags: {}. ".format(", ".join(spec["flags"]))
 
-                    requirements += "This syscall works on: {} firmwares".format(", ".join(spec["firmwares"]))
+                    requirements += "This syscall works on: {} firmwares.".format(", ".join(spec["firmwares"]))
 
                     header_files[spec['class']] += inspect.cleandoc(
                         header_fmt_str.format(
