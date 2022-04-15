@@ -16,6 +16,7 @@ def c_generator():
     #define {}_ID {}
     
     /*! \\brief {}
+               {}
     {}*/
     
     {} {}({});\n
@@ -43,12 +44,22 @@ def c_generator():
                     spec = json.load(f)
 
                     if spec['class'] not in header_files.keys():
-                        header_files[spec['class']] = "#include <ppu_types.h>\n"
+                        header_files[spec['class']] = "#include <ppu_types.h>\n\n"
+
+                    requirements = ""
+                    if len(spec["flags"]) != 0:
+                        if len(spec["flags"]) == 1:
+                            requirements += "To use this syscall, the caller process must have this flag: {}. ".format(spec["flags"][0])
+                        else:
+                            requirements += "To use this syscall, the caller process must have any of these flags: {}. ".format(", ".join(spec["flags"]))
+
+                    requirements += "This syscall works on: {} firmwares".format(", ".join(spec["firmwares"]))
 
                     header_files[spec['class']] += inspect.cleandoc(
                         header_fmt_str.format(
                             spec['name'].upper(), spec['id'],
                             spec['brief'],
+                            requirements,
                             "".join([f"* \\param {param['name']} {param['description']}\n" for param in spec["params"]]),
                             spec["returns"], spec['name'], ', '.join([f"{param['type']} {param['name']}" for param in spec["params"]])
                             )
