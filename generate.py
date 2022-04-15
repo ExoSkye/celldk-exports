@@ -22,12 +22,12 @@ def c_generator():
     """)
 
     assembly_fmt_str = inspect.cleandoc("""
-    \t.globl\t {}
+        .globl  {}
     
     {}:
-    \tli, r11  {}
-    \tsc
-    \tblr
+        li, r11  {}
+        sc
+        blr
     """)
 
     files_and_roots = [(files, root) for root, _, files in os.walk("specs", topdown=False)]
