@@ -15,7 +15,7 @@ def c_generator():
     header_fmt_str = inspect.cleandoc("""
     #define {}_ID {}
     
-    /*! \\brief {}
+    /*! \\brief {}.
                {}
     {}*/
     
