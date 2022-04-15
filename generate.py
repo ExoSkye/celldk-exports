@@ -12,23 +12,23 @@ def c_generator():
         }
     assembly_file = ""
 
-    header_fmt_str = """
+    header_fmt_str = inspect.cleandoc("""
     #define {}_ID {}
     
     /*! \\brief {}
     {}*/
     
     {} {}({});\n
-    """
+    """)
 
-    assembly_fmt_str = """
+    assembly_fmt_str = inspect.cleandoc("""
     \t.globl\t {}
     
     {}:
     \tli, r11  {}
     \tsc
     \tblr
-    """
+    """)
 
     files_and_roots = [(files, root) for root, _, files in os.walk("specs", topdown=False)]
 
