@@ -75,22 +75,22 @@ $(function() {
 <div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160;<span class="comment">// fs_open.json</span></div>
 <div class="line"><a name="l00004"></a><span class="lineno"><a class="line" href="sys__fs_8h.html#aab737c0e99e194adf82558e58a653849">    4</a></span>&#160;<span class="preprocessor">#define SYS_FS_OPEN_ID 801</span></div>
 <div class="line"><a name="l00005"></a><span class="lineno">    5</span>&#160; </div>
-<div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;CellFsErrno <a class="code" href="sys__fs_8h.html#a88fd1573b8452b7bf0f1f5a7f7754463">sys_fs_open</a>(<span class="keyword">const</span> <span class="keywordtype">char</span>* path, u32 flags, u32* fd, <span class="keyword">const</span> <span class="keywordtype">void</span>* arg, u64 size);</div>
-<div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160; </div>
-<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;<span class="comment">// fs_close.json</span></div>
-<div class="line"><a name="l00018"></a><span class="lineno"><a class="line" href="sys__fs_8h.html#aaaacc770f1f0f00d3c4dd673aceae9be">   18</a></span>&#160;<span class="preprocessor">#define SYS_FS_CLOSE_ID 804</span></div>
-<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160; </div>
-<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;CellFsErrno <a class="code" href="sys__fs_8h.html#a24390bb766457c498e00b2dac4f24fad">sys_fs_close</a>(u32 fd);</div>
+<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;CellFsErrno <a class="code" href="sys__fs_8h.html#a88fd1573b8452b7bf0f1f5a7f7754463">sys_fs_open</a>(<span class="keyword">const</span> <span class="keywordtype">char</span>* path, u32 flags, u32* fd, <span class="keyword">const</span> <span class="keywordtype">void</span>* arg, u64 size);</div>
+<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160; </div>
+<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;<span class="comment">// fs_close.json</span></div>
+<div class="line"><a name="l00025"></a><span class="lineno"><a class="line" href="sys__fs_8h.html#aaaacc770f1f0f00d3c4dd673aceae9be">   25</a></span>&#160;<span class="preprocessor">#define SYS_FS_CLOSE_ID 804</span></div>
 <div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160; </div>
-<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;<span class="comment">// fs_read.json</span></div>
-<div class="line"><a name="l00028"></a><span class="lineno"><a class="line" href="sys__fs_8h.html#a79bff48ac74630eef4cf9bd2e3c511c7">   28</a></span>&#160;<span class="preprocessor">#define SYS_FS_READ_ID 802</span></div>
-<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160; </div>
-<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;CellFsErrno <a class="code" href="sys__fs_8h.html#ab4964b157afdd3a9432f28e722e0a718">sys_fs_read</a>(u32 fd, <span class="keywordtype">void</span>* buf, u64 nbytes, u64* nwritten);</div>
-<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160; </div>
+<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;CellFsErrno <a class="code" href="sys__fs_8h.html#a24390bb766457c498e00b2dac4f24fad">sys_fs_close</a>(u32 fd);</div>
+<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160; </div>
+<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;<span class="comment">// fs_read.json</span></div>
+<div class="line"><a name="l00042"></a><span class="lineno"><a class="line" href="sys__fs_8h.html#a79bff48ac74630eef4cf9bd2e3c511c7">   42</a></span>&#160;<span class="preprocessor">#define SYS_FS_READ_ID 802</span></div>
+<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160; </div>
+<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;CellFsErrno <a class="code" href="sys__fs_8h.html#ab4964b157afdd3a9432f28e722e0a718">sys_fs_read</a>(u32 fd, <span class="keywordtype">void</span>* buf, u64 nbytes, u64* nwritten);</div>
+<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160; </div>
 </div><!-- fragment --></div><!-- contents -->
-<div class="ttc" id="asys__fs_8h_html_a88fd1573b8452b7bf0f1f5a7f7754463"><div class="ttname"><a href="sys__fs_8h.html#a88fd1573b8452b7bf0f1f5a7f7754463">sys_fs_open</a></div><div class="ttdeci">CellFsErrno sys_fs_open(const char *path, u32 flags, u32 *fd, const void *arg, u64 size)</div><div class="ttdoc">Opens a file. This syscall works on: CEX, DEX, DECR firmwares.</div></div>
-<div class="ttc" id="asys__fs_8h_html_ab4964b157afdd3a9432f28e722e0a718"><div class="ttname"><a href="sys__fs_8h.html#ab4964b157afdd3a9432f28e722e0a718">sys_fs_read</a></div><div class="ttdeci">CellFsErrno sys_fs_read(u32 fd, void *buf, u64 nbytes, u64 *nwritten)</div><div class="ttdoc">Read from a file descriptor. This syscall works on: CEX, DEX, DECR firmwares.</div></div>
-<div class="ttc" id="asys__fs_8h_html_a24390bb766457c498e00b2dac4f24fad"><div class="ttname"><a href="sys__fs_8h.html#a24390bb766457c498e00b2dac4f24fad">sys_fs_close</a></div><div class="ttdeci">CellFsErrno sys_fs_close(u32 fd)</div><div class="ttdoc">Closes a file descriptor. This syscall works on: CEX, DEX, DECR firmwares.</div></div>
+<div class="ttc" id="asys__fs_8h_html_a88fd1573b8452b7bf0f1f5a7f7754463"><div class="ttname"><a href="sys__fs_8h.html#a88fd1573b8452b7bf0f1f5a7f7754463">sys_fs_open</a></div><div class="ttdeci">CellFsErrno sys_fs_open(const char *path, u32 flags, u32 *fd, const void *arg, u64 size)</div><div class="ttdoc">Opens a file.</div></div>
+<div class="ttc" id="asys__fs_8h_html_ab4964b157afdd3a9432f28e722e0a718"><div class="ttname"><a href="sys__fs_8h.html#ab4964b157afdd3a9432f28e722e0a718">sys_fs_read</a></div><div class="ttdeci">CellFsErrno sys_fs_read(u32 fd, void *buf, u64 nbytes, u64 *nwritten)</div><div class="ttdoc">Read from a file descriptor.</div></div>
+<div class="ttc" id="asys__fs_8h_html_a24390bb766457c498e00b2dac4f24fad"><div class="ttname"><a href="sys__fs_8h.html#a24390bb766457c498e00b2dac4f24fad">sys_fs_close</a></div><div class="ttdeci">CellFsErrno sys_fs_close(u32 fd)</div><div class="ttdoc">Closes a file descriptor.</div></div>
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
 Generated by &#160;<a href="http://www.doxygen.org/index.html">
