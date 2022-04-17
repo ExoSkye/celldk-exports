@@ -4,6 +4,25 @@ import inspect
 from itertools import chain
 import sys
 from subprocess import run
+import jsonschema
+from jsonschema import validate
+
+
+def get_schema():
+    with open("schema.json", "r") as f:
+        schema = json.load(f)
+    return schema
+
+def validate_json(json_data):
+    execute_api_schema = get_schema()
+
+    try:
+        validate(instance=json_data, schema=execute_api_schema)
+    except jsonschema.exceptions.ValidationError as err:
+        print(err)
+        return False
+
+    return True
 
 
 def c_generator():
@@ -45,6 +64,8 @@ def c_generator():
             if file.split(".")[-1] == "json":
                 with open(os.path.join(root, file)) as f:
                     spec = json.load(f)
+                    if not validate_json(spec):
+                        print(f"{file} isn't conformant to the schema, skipping")
 
                     if spec['class'] not in header_files.keys():
                         header_files[spec['class']] = "#include <ppu_types.h>\n\n"
