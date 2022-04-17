@@ -38,7 +38,7 @@ def c_generator():
     #define {}_ID {}
     
     /*! \\brief {}.
-               {}
+        {}
     {}*/
     
     {} {}({});\n
@@ -66,27 +66,39 @@ def c_generator():
                     spec = json.load(f)
                     if not validate_json(spec):
                         print(f"{file} isn't conformant to the schema, skipping")
+                        continue
 
                     if spec['class'] not in header_files.keys():
                         header_files[spec['class']] = "#include <ppu_types.h>\n\n"
 
                     requirements = ""
                     if len(spec["flags"]) != 0:
-                        if len(spec["flags"]) == 1:
-                            requirements += "To use this syscall, the caller process must have this flag: {}. ".format(
-                                spec["flags"][0])
-                        else:
-                            requirements += "To use this syscall, the caller process must have any of these flags: {}. ".format(
-                                ", ".join(spec["flags"]))
+                        requirmenets += inspect.cleandoc("""
+                            Required flags:
+                            |Flags|
+                            |-----|
+                        """)
+                        for flag in spec["flags"]:
+                            requirements += f"|{flag}|\n"
+                            
+                    cex_support = "×"
+                    dex_support = "×"
+                    decr_support = "×"
 
-                    requirements += "This syscall works on: {} firmwares.".format(", ".join(spec["firmwares"]))
+                    requirements += inspect.cleandoc(f"""
+                        Firmware support:
+                        |Firmware|Supported|
+                        |--------|---------|
+                        |CEX|{cex_support}|
+                        |DEX|{dex_support}|
+                        |DECR|{decr_support}|
+                    """)
 
                     header_files[spec['class']] += inspect.cleandoc(
                         header_fmt_str.format(
                             file,
                             spec['name'].upper(), spec['id'],
                             spec['brief'],
-                            requirements,
                             "".join(
                                 [f"* \\param {param['name']} {param['description']}\n" for param in spec["params"]]),
                             spec["returns"], spec['name'],
