@@ -3,16 +3,19 @@ import json
 import inspect
 from itertools import chain
 import sys
+from subprocess import run
+
 
 def c_generator():
     header_files = {
         "syscalls": inspect.cleandoc("""#ifndef LV2_SYSCALLS_H
             #define LV2_SYSCALLS_H
             """)
-        }
+    }
     assembly_file = ""
 
     header_fmt_str = inspect.cleandoc("""
+    // {}
     #define {}_ID {}
     
     /*! \\brief {}.
@@ -49,32 +52,36 @@ def c_generator():
                     requirements = ""
                     if len(spec["flags"]) != 0:
                         if len(spec["flags"]) == 1:
-                            requirements += "To use this syscall, the caller process must have this flag: {}. ".format(spec["flags"][0])
+                            requirements += "To use this syscall, the caller process must have this flag: {}. ".format(
+                                spec["flags"][0])
                         else:
-                            requirements += "To use this syscall, the caller process must have any of these flags: {}. ".format(", ".join(spec["flags"]))
+                            requirements += "To use this syscall, the caller process must have any of these flags: {}. ".format(
+                                ", ".join(spec["flags"]))
 
                     requirements += "This syscall works on: {} firmwares.".format(", ".join(spec["firmwares"]))
 
                     header_files[spec['class']] += inspect.cleandoc(
                         header_fmt_str.format(
+                            file,
                             spec['name'].upper(), spec['id'],
                             spec['brief'],
                             requirements,
-                            "".join([f"* \\param {param['name']} {param['description']}\n" for param in spec["params"]]),
-                            spec["returns"], spec['name'], ', '.join([f"{param['type']} {param['name']}" for param in spec["params"]])
-                            )
+                            "".join(
+                                [f"* \\param {param['name']} {param['description']}\n" for param in spec["params"]]),
+                            spec["returns"], spec['name'],
+                            ', '.join([f"{param['type']} {param['name']}" for param in spec["params"]])
                         )
+                    )
                     header_files[spec['class']] += "\n\n"
 
                     assembly_file += inspect.cleandoc(
                         assembly_fmt_str.format(spec['name'],
                                                 spec['name'],
                                                 spec['id'])
-                        )
+                    )
                     assembly_file += "\n\n"
 
                     print(f"Parsed {file} ({i}/{total})")
-
 
     try:
         os.mkdir("generated")
@@ -97,7 +104,8 @@ def c_generator():
         with open(f"generated/{file}.h", mode="w") as f:
             f.write(header_files[file])
 
-def ask_param(question, default = None, no_response = False):
+
+def ask_param(question, default=None, no_response=False):
     if default is not None:
         tmp = input(f"{question} [{default}]: ").strip("\n")
         if tmp == "":
@@ -170,6 +178,9 @@ def json_generator(argv):
 
     with open(f"specs/{fname}", "w") as f:
         json.dump(spec, f)
+
+    clang_format = run(['clang-format', '-i', f'specs/{fname}'])
+
 
 if __name__ == '__main__':
     if len(sys.argv) != 1:

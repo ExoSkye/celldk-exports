@@ -1,0 +1,20 @@
+{
+  "name": "sys_fs_close",
+  "id": 804,
+  "returns": "CellFsErrno",
+  "brief": "Closes a file descriptor",
+  "class": "sys_fs",
+  "params": [
+    {
+      "name": "fd",
+      "type": "u32",
+      "description": "The file descriptor to close"
+    }
+  ],
+  "flags": [],
+  "firmwares": [
+    "CEX",
+    "DEX",
+    "DECR"
+  ]
+}

@@ -1,0 +1,35 @@
+{
+  "name": "sys_fs_read",
+  "id": 802,
+  "returns": "CellFsErrno",
+  "brief": "Read from a file descriptor",
+  "class": "sys_fs",
+  "params": [
+    {
+      "name": "fd",
+      "type": "u32",
+      "description": "The file descriptor"
+    },
+    {
+      "name": "buf",
+      "type": "void*",
+      "description": "The buffer to write the data read from the file into"
+    },
+    {
+      "name": "nbytes",
+      "type": "u64",
+      "description": "The length of 'buf'"
+    },
+    {
+      "name": "nwritten",
+      "type": "u64*",
+      "description": "The variable to write the actual number of bytes read to"
+    }
+  ],
+  "flags": [],
+  "firmwares": [
+    "CEX",
+    "DEX",
+    "DECR"
+  ]
+}
