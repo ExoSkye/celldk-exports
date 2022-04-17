@@ -1,0 +1,35 @@
+{
+  "name": "sys_fs_lseek",
+  "id": 818,
+  "returns": "CellFsErrno",
+  "brief": "Seek to a position in a file",
+  "class": "sys_fs",
+  "params": [
+    {
+      "name": "fd",
+      "type": "u32",
+      "description": "The file descriptor that points to the file to sink in"
+    },
+    {
+      "name": "offset",
+      "type": "s64",
+      "description": "The offset to seek to"
+    },
+    {
+      "name": "whence",
+      "type": "s32",
+      "description": "The direction to seek in"
+    },
+    {
+      "name": "pos",
+      "type": "u64*",
+      "description": "A pointer to a variable that the new position should be written to"
+    }
+  ],
+  "flags": [],
+  "firmwares": [
+    "CEX",
+    "DEX",
+    "DECR"
+  ]
+}

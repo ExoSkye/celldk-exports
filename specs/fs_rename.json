@@ -1,0 +1,25 @@
+{
+  "name": "sys_fs_rename",
+  "id": 812,
+  "returns": "CellFsErrno",
+  "brief": "Rename a file",
+  "class": "sys_fs",
+  "params": [
+    {
+      "name": "path",
+      "type": "const char* path",
+      "description": "The path of the file to rename"
+    },
+    {
+      "name": "to",
+      "type": "const char*",
+      "description": "The new path of the fail"
+    }
+  ],
+  "flags": [],
+  "firmwares": [
+    "CEX",
+    "DEX",
+    "DECR"
+  ]
+}
