@@ -73,17 +73,24 @@ def c_generator():
 
                     requirements = ""
                     if len(spec["flags"]) != 0:
-                        requirmenets += inspect.cleandoc("""
+                        requirements += inspect.cleandoc("""
                             Required flags:
-                            |Flags|
-                            |-----|
                         """)
                         for flag in spec["flags"]:
-                            requirements += f"|{flag}|\n"
-                            
+                            requirements += f"\n- {flag}\n\n"
+
                     cex_support = "×"
                     dex_support = "×"
                     decr_support = "×"
+
+                    if "CEX" in spec["firmwares"]:
+                        cex_support = "✓"
+
+                    if "DEX" in spec["firmwares"]:
+                        dex_support = "✓"
+
+                    if "DECR" in spec["firmwares"]:
+                        decr_support = "✓"
 
                     requirements += inspect.cleandoc(f"""
                         Firmware support:
@@ -99,8 +106,11 @@ def c_generator():
                             file,
                             spec['name'].upper(), spec['id'],
                             spec['brief'],
+                            "\n" + "".join(
+                                [f"{req_line}\n" for req_line in requirements.split("\n")],
+                            ),
                             "".join(
-                                [f"* \\param {param['name']} {param['description']}\n" for param in spec["params"]]),
+                                [f" * \\param {param['name']} {param['description']}\n" for param in spec["params"]]),
                             spec["returns"], spec['name'],
                             ', '.join([f"{param['type']} {param['name']}" for param in spec["params"]])
                         )
