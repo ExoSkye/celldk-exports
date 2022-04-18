@@ -11,3 +11,5 @@ add_custom_command(
 )
 
 add_library(ps3dk-syscalls ${CMAKE_SOURCE_DIR}/generated/syscalls.S ${CMAKE_SOURCE_DIR}/generated/syscalls.h)
+
+add_subdirectory(test_project)

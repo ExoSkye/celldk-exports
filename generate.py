@@ -48,7 +48,7 @@ def c_generator():
         .globl  {}
     
     {}:
-        li, r11  {}
+        li 11, {}
         sc
         blr
     """)
@@ -69,7 +69,7 @@ def c_generator():
                         continue
 
                     if spec['class'] not in header_files.keys():
-                        header_files[spec['class']] = "#include <ppu_types.h>\n\n"
+                        header_files[spec['class']] = "#include <ppu-types.h>\n\n"
 
                     requirements = ""
                     if len(spec["flags"]) != 0:
