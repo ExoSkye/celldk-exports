@@ -1,12 +1,27 @@
 {
   "$schema": "http://json-schema.org/draft-04/schema#",
   "type": "object",
+
   "properties": {
-    "id": {
-      "type": "integer"
-    },
     "name": {
       "type": "string"
+    },
+    "ids": {
+      "type": "object",
+      "anyOf": [
+        {
+          "properties": {
+            "syscall_id": {}
+          },
+          "required": ["syscall_id"]
+        },
+        {
+          "properties": {
+            "prx_id": {}
+          },
+          "required": ["prx_id"]
+        }
+      ]
     },
     "returns": {
       "type": "string"
@@ -42,7 +57,12 @@
     "firmwares": {
       "type": "array",
       "items": {
-        "type": "string"
+        "type": "string",
+        "enum": [
+          "CEX",
+          "DEX",
+          "DECR"
+        ]
       },
       "minItems": 1,
       "uniqueItems": true
@@ -57,8 +77,8 @@
     }
   },
   "required": [
-    "id",
     "name",
+    "ids",
     "returns",
     "params",
     "brief",

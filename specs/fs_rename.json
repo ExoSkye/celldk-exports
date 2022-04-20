@@ -1,6 +1,5 @@
 {
   "name": "sys_fs_rename",
-  "id": 812,
   "returns": "CellFsErrno",
   "brief": "Rename a file",
   "class": "sys_fs",
@@ -21,5 +20,9 @@
     "CEX",
     "DEX",
     "DECR"
-  ]
+  ],
+  "ids": {
+    "syscall_id": 812,
+    "prx_id": "0xF12EECC8"
+  }
 }

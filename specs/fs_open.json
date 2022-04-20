@@ -1,6 +1,5 @@
 {
   "name": "sys_fs_open",
-  "id": 801,
   "returns": "CellFsErrno",
   "brief": "Opens a file",
   "class": "sys_fs",
@@ -36,5 +35,9 @@
     "CEX",
     "DEX",
     "DECR"
-  ]
+  ],
+  "ids": {
+    "syscall_id": 801,
+    "prx_id": "0x718BF5F8"
+  }
 }

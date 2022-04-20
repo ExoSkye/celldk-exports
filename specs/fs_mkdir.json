@@ -1,0 +1,28 @@
+{
+  "name": "sys_fs_mkdir",
+  "returns": "CellFsErrno",
+  "brief": "Creates a directory",
+  "class": "sys_fs",
+  "params": [
+    {
+      "name": "path",
+      "type": "const char*",
+      "description": "The path of the new directory"
+    },
+    {
+      "name": "mode",
+      "type": "CellFsMode",
+      "description": "The mode to create the new directory with"
+    }
+  ],
+  "flags": [],
+  "firmwares": [
+    "CEX",
+    "DEX",
+    "DECR"
+  ],
+  "ids": {
+    "syscall_id": 811,
+    "prx_id": "0xBA901FE6"
+  }
+}

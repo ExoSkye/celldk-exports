@@ -1,5 +1,4 @@
 {
-  "id": 1,
   "name": "sys_process_getpid",
   "returns": "sys_pid_t",
   "params": [],
@@ -10,5 +9,8 @@
     "DEX",
     "CEX"
   ],
-  "flags": []
+  "flags": [],
+  "ids": {
+    "syscall_id": 1
+  }
 }

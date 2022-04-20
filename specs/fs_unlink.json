@@ -1,6 +1,5 @@
 {
   "name": "sys_fs_unlink",
-  "id": 814,
   "returns": "CellFsErrno",
   "brief": "Deletes a file",
   "class": "sys_fs",
@@ -16,5 +15,9 @@
     "CEX",
     "DEX",
     "DECR"
-  ]
+  ],
+  "ids": {
+    "syscall_id": 814,
+    "prx_id": "0x7F4677A8"
+  }
 }

@@ -1,6 +1,5 @@
 {
   "name": "sys_process_exit",
-  "id": 3,
   "returns": "int",
   "brief": "Exits the current process",
   "class": "sys_process",
@@ -16,5 +15,9 @@
     "CEX",
     "DEX",
     "DECR"
-  ]
+  ],
+  "ids": {
+    "syscall_id": 3,
+    "prx_id": "0xE6F2C1E7"
+  }
 }

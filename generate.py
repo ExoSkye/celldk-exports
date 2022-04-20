@@ -104,7 +104,7 @@ def c_generator():
                     header_files[spec['class']] += inspect.cleandoc(
                         header_fmt_str.format(
                             file,
-                            spec['name'].upper(), spec['id'],
+                            spec['name'].upper(), spec['ids']['syscall_id'],
                             spec['brief'],
                             "\n" + "".join(
                                 [f"{req_line}\n" for req_line in requirements.split("\n")],
@@ -120,7 +120,7 @@ def c_generator():
                     assembly_file += inspect.cleandoc(
                         assembly_fmt_str.format(spec['name'],
                                                 spec['name'],
-                                                spec['id'])
+                                                spec['ids']['syscall_id'])
                     )
                     assembly_file += "\n\n"
 
@@ -167,62 +167,93 @@ def ask_param(question, default=None, no_response=False):
             return tmp
 
 
+def json_upgrade():
+    print("Upgrading JSON files")
+    files_and_roots = [(files, root) for root, _, files in os.walk("specs", topdown=False)]
+
+    for files, root in files_and_roots:
+        for file in files:
+            print(f"Upgrading file: {file}")
+            with open(os.path.join(root, file), "r") as f:
+                data = json.load(f)
+
+            if "id" in data.keys():
+                prx_id = ask_param("PRX ID", no_response=True)
+
+                data["ids"] = {
+                    "syscall_id": data["id"]
+                }
+
+                if prx_id is not None:
+                    data["ids"]["prx_id"] = prx_id
+
+                del data["id"]
+
+            with open(os.path.join(root, file), "w") as f:
+                json.dump(data, f)
+
+            run(['clang-format', '-i', os.path.join(root, file)])
+
+
 def json_generator(argv):
-    if sys.argv[1] != "add":
-        fname = sys.argv[1]
+    if sys.argv[1] == "upgrade":
+        json_upgrade()
     else:
-        fname = ask_param("File name")
+        if sys.argv[1] != "add":
+            fname = sys.argv[1]
+        else:
+            fname = ask_param("File name")
 
-    func_name = ask_param("Function name", default=f"sys_{fname[:-5]}")
+        func_name = ask_param("Function name", default=f"sys_{fname[:-5]}")
 
-    spec = {
-        "name": func_name,
-        "id": int(ask_param("ID")),
-        "returns": ask_param("Return type", default="void"),
-        "brief": ask_param("Description"),
-        "class": ask_param("Class", default=f"{'_'.join(func_name.split('_')[:2])}"),
-        "params": [],
-        "flags": [],
-        "firmwares": []
-    }
-
-    i = 0
-
-    while True:
-        name = ask_param(f"Parameter {i + 1} name", no_response=True)
-
-        if name is None:
-            break
-
-        param = {
-            "name": name,
-            "type": ask_param(f"Parameter {i + 1} type", no_response=True),
-            "description": ask_param(f"Parameter {i + 1} description", no_response=True)
+        spec = {
+            "name": func_name,
+            "id": int(ask_param("ID")),
+            "returns": ask_param("Return type", default="void"),
+            "brief": ask_param("Description"),
+            "class": ask_param("Class", default=f"{'_'.join(func_name.split('_')[:2])}"),
+            "params": [],
+            "flags": [],
+            "firmwares": []
         }
 
-        if param["name"] is None or param["type"] is None or param["description"] is None:
-            break
-        else:
-            spec["params"].append(param)
+        i = 0
 
-        i += 1
+        while True:
+            name = ask_param(f"Parameter {i + 1} name", no_response=True)
 
-    for firmware in ["CEX", "DEX", "DECR"]:
-        if ask_param(f"Does this function work on {firmware} (y/n)") == "y":
-            spec["firmwares"].append(firmware)
+            if name is None:
+                break
 
-    while True:
-        flag = ask_param("Enter a required flag", no_response=True)
+            param = {
+                "name": name,
+                "type": ask_param(f"Parameter {i + 1} type", no_response=True),
+                "description": ask_param(f"Parameter {i + 1} description", no_response=True)
+            }
 
-        if flag is None:
-            break
-        else:
-            spec["flags"].append(flag)
+            if param["name"] is None or param["type"] is None or param["description"] is None:
+                break
+            else:
+                spec["params"].append(param)
 
-    with open(f"specs/{fname}", "w") as f:
-        json.dump(spec, f)
+            i += 1
 
-    clang_format = run(['clang-format', '-i', f'specs/{fname}'])
+        for firmware in ["CEX", "DEX", "DECR"]:
+            if ask_param(f"Does this function work on {firmware} (y/n)") == "y":
+                spec["firmwares"].append(firmware)
+
+        while True:
+            flag = ask_param("Enter a required flag", no_response=True)
+
+            if flag is None:
+                break
+            else:
+                spec["flags"].append(flag)
+
+        with open(f"specs/{fname}", "w") as f:
+            json.dump(spec, f)
+
+        run(['clang-format', '-i', f'specs/{fname}'])
 
 
 if __name__ == '__main__':

@@ -1,6 +1,9 @@
 {
   "name": "sys_fs_close",
-  "id": 804,
+  "ids": {
+    "syscall_id": 804,
+    "prx_id": "0x2CB51F0D"
+  },
   "returns": "CellFsErrno",
   "brief": "Closes a file descriptor",
   "class": "sys_fs",

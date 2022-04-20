@@ -1,6 +1,5 @@
 {
   "name": "sys_fs_read",
-  "id": 802,
   "returns": "CellFsErrno",
   "brief": "Read from a file descriptor",
   "class": "sys_fs",
@@ -31,5 +30,9 @@
     "CEX",
     "DEX",
     "DECR"
-  ]
+  ],
+  "ids": {
+    "syscall_id": 802,
+    "prx_id": "0x4D5FF8E2"
+  }
 }

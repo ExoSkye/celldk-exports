@@ -1,5 +1,4 @@
 {
-  "id": 403,
   "name": "sys_tty_write",
   "returns": "s32",
   "params": [
@@ -31,5 +30,8 @@
     "DEX",
     "CEX"
   ],
-  "flags": []
+  "flags": [],
+  "ids": {
+    "syscall_id": 403
+  }
 }
