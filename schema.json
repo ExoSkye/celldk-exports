@@ -11,13 +11,17 @@
       "anyOf": [
         {
           "properties": {
-            "syscall_id": {}
+            "syscall_id": {
+              "type": "integer"
+            }
           },
           "required": ["syscall_id"]
         },
         {
           "properties": {
-            "prx_id": {}
+            "prx_id": {
+              "type": "string"
+            }
           },
           "required": ["prx_id"]
         }
