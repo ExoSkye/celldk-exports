@@ -11,3 +11,4 @@ typedef int64_t s64;
 typedef u64 sys_pid_t;
 
 typedef u32 CellFsErrno;
+typedef s32 CellFsMode;
