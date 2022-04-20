@@ -77,32 +77,38 @@ $(function() {
 <div class="line"><a name="l00005"></a><span class="lineno">    5</span>&#160; </div>
 <div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;CellFsErrno <a class="code" href="sys__fs_8h.html#a88fd1573b8452b7bf0f1f5a7f7754463">sys_fs_open</a>(<span class="keyword">const</span> <span class="keywordtype">char</span>* path, u32 flags, u32* fd, <span class="keyword">const</span> <span class="keywordtype">void</span>* arg, u64 size);</div>
 <div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160; </div>
-<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;<span class="comment">// fs_unlink.json</span></div>
-<div class="line"><a name="l00025"></a><span class="lineno"><a class="line" href="sys__fs_8h.html#a37fa7d2c584c51392ed9eee0b1e589f9">   25</a></span>&#160;<span class="preprocessor">#define SYS_FS_UNLINK_ID 814</span></div>
+<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;<span class="comment">// fs_mkdir.json</span></div>
+<div class="line"><a name="l00025"></a><span class="lineno"><a class="line" href="sys__fs_8h.html#a46a5b5553aa166c9532dc9d72791b023">   25</a></span>&#160;<span class="preprocessor">#define SYS_FS_MKDIR_ID 811</span></div>
 <div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160; </div>
-<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;CellFsErrno <a class="code" href="sys__fs_8h.html#a83e5a1f551f06fa89c8aa763bc8c2743">sys_fs_unlink</a>(<span class="keyword">const</span> <span class="keywordtype">char</span>* path);</div>
-<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160; </div>
-<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;<span class="comment">// fs_close.json</span></div>
-<div class="line"><a name="l00042"></a><span class="lineno"><a class="line" href="sys__fs_8h.html#aaaacc770f1f0f00d3c4dd673aceae9be">   42</a></span>&#160;<span class="preprocessor">#define SYS_FS_CLOSE_ID 804</span></div>
-<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160; </div>
-<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;CellFsErrno <a class="code" href="sys__fs_8h.html#a24390bb766457c498e00b2dac4f24fad">sys_fs_close</a>(u32 fd);</div>
-<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160; </div>
-<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;<span class="comment">// fs_rename.json</span></div>
-<div class="line"><a name="l00059"></a><span class="lineno"><a class="line" href="sys__fs_8h.html#acd8eb38b8aa9e7bbddc66e811bffce8e">   59</a></span>&#160;<span class="preprocessor">#define SYS_FS_RENAME_ID 812</span></div>
-<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160; </div>
-<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;CellFsErrno <a class="code" href="sys__fs_8h.html#a68b84825f0061cbcc47b80790e6f77ca">sys_fs_rename</a>(<span class="keyword">const</span> <span class="keywordtype">char</span>* path, <span class="keyword">const</span> <span class="keywordtype">char</span>* to);</div>
+<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;CellFsErrno <a class="code" href="sys__fs_8h.html#a290924e23700a501cf343a7dfcf7b493">sys_fs_mkdir</a>(<span class="keyword">const</span> <span class="keywordtype">char</span>* path, CellFsMode mode);</div>
+<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160; </div>
+<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;<span class="comment">// fs_unlink.json</span></div>
+<div class="line"><a name="l00043"></a><span class="lineno"><a class="line" href="sys__fs_8h.html#a37fa7d2c584c51392ed9eee0b1e589f9">   43</a></span>&#160;<span class="preprocessor">#define SYS_FS_UNLINK_ID 814</span></div>
+<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160; </div>
+<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;CellFsErrno <a class="code" href="sys__fs_8h.html#a83e5a1f551f06fa89c8aa763bc8c2743">sys_fs_unlink</a>(<span class="keyword">const</span> <span class="keywordtype">char</span>* path);</div>
+<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160; </div>
+<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;<span class="comment">// fs_close.json</span></div>
+<div class="line"><a name="l00060"></a><span class="lineno"><a class="line" href="sys__fs_8h.html#aaaacc770f1f0f00d3c4dd673aceae9be">   60</a></span>&#160;<span class="preprocessor">#define SYS_FS_CLOSE_ID 804</span></div>
+<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160; </div>
+<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;CellFsErrno <a class="code" href="sys__fs_8h.html#a24390bb766457c498e00b2dac4f24fad">sys_fs_close</a>(u32 fd);</div>
 <div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160; </div>
-<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;<span class="comment">// fs_read.json</span></div>
-<div class="line"><a name="l00077"></a><span class="lineno"><a class="line" href="sys__fs_8h.html#a79bff48ac74630eef4cf9bd2e3c511c7">   77</a></span>&#160;<span class="preprocessor">#define SYS_FS_READ_ID 802</span></div>
+<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;<span class="comment">// fs_rename.json</span></div>
+<div class="line"><a name="l00077"></a><span class="lineno"><a class="line" href="sys__fs_8h.html#acd8eb38b8aa9e7bbddc66e811bffce8e">   77</a></span>&#160;<span class="preprocessor">#define SYS_FS_RENAME_ID 812</span></div>
 <div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160; </div>
-<div class="line"><a name="l00094"></a><span class="lineno">   94</span>&#160;CellFsErrno <a class="code" href="sys__fs_8h.html#ab4964b157afdd3a9432f28e722e0a718">sys_fs_read</a>(u32 fd, <span class="keywordtype">void</span>* buf, u64 nbytes, u64* nwritten);</div>
-<div class="line"><a name="l00095"></a><span class="lineno">   95</span>&#160; </div>
-<div class="line"><a name="l00096"></a><span class="lineno">   96</span>&#160;<span class="comment">// fs_lseek.json</span></div>
-<div class="line"><a name="l00097"></a><span class="lineno"><a class="line" href="sys__fs_8h.html#aef9e8acdb2b1636bd075c5e76a3358d0">   97</a></span>&#160;<span class="preprocessor">#define SYS_FS_LSEEK_ID 818</span></div>
-<div class="line"><a name="l00098"></a><span class="lineno">   98</span>&#160; </div>
-<div class="line"><a name="l00114"></a><span class="lineno">  114</span>&#160;CellFsErrno <a class="code" href="sys__fs_8h.html#acf49fffb62da1ebdc2c76aee162096a2">sys_fs_lseek</a>(u32 fd, s64 offset, s32 whence, u64* pos);</div>
-<div class="line"><a name="l00115"></a><span class="lineno">  115</span>&#160; </div>
+<div class="line"><a name="l00092"></a><span class="lineno">   92</span>&#160;CellFsErrno <a class="code" href="sys__fs_8h.html#a68b84825f0061cbcc47b80790e6f77ca">sys_fs_rename</a>(<span class="keyword">const</span> <span class="keywordtype">char</span>* path, <span class="keyword">const</span> <span class="keywordtype">char</span>* to);</div>
+<div class="line"><a name="l00093"></a><span class="lineno">   93</span>&#160; </div>
+<div class="line"><a name="l00094"></a><span class="lineno">   94</span>&#160;<span class="comment">// fs_read.json</span></div>
+<div class="line"><a name="l00095"></a><span class="lineno"><a class="line" href="sys__fs_8h.html#a79bff48ac74630eef4cf9bd2e3c511c7">   95</a></span>&#160;<span class="preprocessor">#define SYS_FS_READ_ID 802</span></div>
+<div class="line"><a name="l00096"></a><span class="lineno">   96</span>&#160; </div>
+<div class="line"><a name="l00112"></a><span class="lineno">  112</span>&#160;CellFsErrno <a class="code" href="sys__fs_8h.html#ab4964b157afdd3a9432f28e722e0a718">sys_fs_read</a>(u32 fd, <span class="keywordtype">void</span>* buf, u64 nbytes, u64* nwritten);</div>
+<div class="line"><a name="l00113"></a><span class="lineno">  113</span>&#160; </div>
+<div class="line"><a name="l00114"></a><span class="lineno">  114</span>&#160;<span class="comment">// fs_lseek.json</span></div>
+<div class="line"><a name="l00115"></a><span class="lineno"><a class="line" href="sys__fs_8h.html#aef9e8acdb2b1636bd075c5e76a3358d0">  115</a></span>&#160;<span class="preprocessor">#define SYS_FS_LSEEK_ID 818</span></div>
+<div class="line"><a name="l00116"></a><span class="lineno">  116</span>&#160; </div>
+<div class="line"><a name="l00132"></a><span class="lineno">  132</span>&#160;CellFsErrno <a class="code" href="sys__fs_8h.html#acf49fffb62da1ebdc2c76aee162096a2">sys_fs_lseek</a>(u32 fd, s64 offset, s32 whence, u64* pos);</div>
+<div class="line"><a name="l00133"></a><span class="lineno">  133</span>&#160; </div>
 </div><!-- fragment --></div><!-- contents -->
+<div class="ttc" id="asys__fs_8h_html_a290924e23700a501cf343a7dfcf7b493"><div class="ttname"><a href="sys__fs_8h.html#a290924e23700a501cf343a7dfcf7b493">sys_fs_mkdir</a></div><div class="ttdeci">CellFsErrno sys_fs_mkdir(const char *path, CellFsMode mode)</div><div class="ttdoc">Creates a directory.</div></div>
 <div class="ttc" id="asys__fs_8h_html_a88fd1573b8452b7bf0f1f5a7f7754463"><div class="ttname"><a href="sys__fs_8h.html#a88fd1573b8452b7bf0f1f5a7f7754463">sys_fs_open</a></div><div class="ttdeci">CellFsErrno sys_fs_open(const char *path, u32 flags, u32 *fd, const void *arg, u64 size)</div><div class="ttdoc">Opens a file.</div></div>
 <div class="ttc" id="asys__fs_8h_html_a83e5a1f551f06fa89c8aa763bc8c2743"><div class="ttname"><a href="sys__fs_8h.html#a83e5a1f551f06fa89c8aa763bc8c2743">sys_fs_unlink</a></div><div class="ttdeci">CellFsErrno sys_fs_unlink(const char *path)</div><div class="ttdoc">Deletes a file.</div></div>
 <div class="ttc" id="asys__fs_8h_html_acf49fffb62da1ebdc2c76aee162096a2"><div class="ttname"><a href="sys__fs_8h.html#acf49fffb62da1ebdc2c76aee162096a2">sys_fs_lseek</a></div><div class="ttdeci">CellFsErrno sys_fs_lseek(u32 fd, s64 offset, s32 whence, u64 *pos)</div><div class="ttdoc">Seek to a position in a file.</div></div>
