@@ -6,12 +6,14 @@ import sys
 from subprocess import run
 import jsonschema
 from jsonschema import validate
+from enum import Enum
 
 
 def get_schema():
     with open("schema.json", "r") as f:
         schema = json.load(f)
     return schema
+
 
 def validate_json(json_data):
     execute_api_schema = get_schema()
@@ -25,7 +27,31 @@ def validate_json(json_data):
     return True
 
 
+class LibType(Enum):
+    Syscall = 0
+    PRX = 1
+
+
+class Library:
+    def __init__(self, _name: str, _type: LibType):
+        self.type = _type
+        self.name = _name
+        self.files = {}
+
+    def write_to_disk(self, prefix: str):
+        try:
+            os.mkdir(prefix + self.name)
+        except FileExistsError:
+            pass
+
+        for file in self.files.keys():
+            with open(prefix + self.name + "/" + file, "w") as f:
+                f.write(self.files[file])
+
+
 def c_generator():
+    generated_libraries = {}
+
     header_files = {
         "syscalls": inspect.cleandoc("""#ifndef LV2_SYSCALLS_H
             #define LV2_SYSCALLS_H
@@ -53,6 +79,32 @@ def c_generator():
         blr
     """)
 
+    cmake_syscall_file = inspect.cleandoc("""
+    cmake_minimum_required(VERSION 3.0)
+    project({}_syscalls LANGUAGES C ASM)
+    
+    if(CMAKE_TOOLCHAIN_FILE STREQUAL "")
+        message(FATAL_ERROR "The PS3DK Toolchain File must be used to build this library")
+    endif()
+    
+    add_library({}_syscalls STATIC {})
+    """)
+
+    cmake_prx_file = inspect.cleandoc("""
+    cmake_minimum_required(VERSION 3.0)
+    project({}_prx LANGUAGES C)
+    
+    if(CMAKE_TOOLCHAIN_FILE STREQUAL "")
+        message(FATAL_ERROR "The PS3DK Toolchain File must be used to build this library")
+    endif()
+    
+    add_library({}_prx STATIC exports.c)
+    """)
+
+    prx_def_file = inspect.cleandoc("""
+    EXPORT({}, {})
+    """)
+
     files_and_roots = [(files, root) for root, _, files in os.walk("specs", topdown=False)]
 
     total = len(list(chain(*[files for files, _ in files_and_roots])))
@@ -68,8 +120,24 @@ def c_generator():
                         print(f"{file} isn't conformant to the schema, skipping")
                         continue
 
-                    if spec['class'] not in header_files.keys():
-                        header_files[spec['class']] = "#include <ppu-types.h>\n\n"
+                    syscall_lib_name = spec["class"] + "_syscalls"
+                    prx_lib_name = spec["class"] + "_prx"
+
+                    spec_defines_syscall = spec["ids"].get("syscall_id", None) is not None
+                    spec_defines_prx_export = spec["ids"].get("prx_id", None) is not None
+
+                    if spec_defines_syscall and syscall_lib_name not in generated_libraries.keys():
+                        generated_libraries[syscall_lib_name] = Library(syscall_lib_name, LibType.Syscall)
+                        generated_libraries[syscall_lib_name].files["CMakeLists.txt"] = cmake_syscall_file.format(
+                            spec["class"], spec["class"], "{}")
+
+                    if spec_defines_prx_export and prx_lib_name not in generated_libraries.keys():
+                        generated_libraries[prx_lib_name] = Library(prx_lib_name, LibType.PRX)
+                        generated_libraries[prx_lib_name].files["CMakeLists.txt"] = cmake_prx_file.format(
+                            spec["class"], spec["class"])
+                        generated_libraries[prx_lib_name].files["exports.c"] = inspect.cleandoc("""
+                            #include <sprx_common.h>
+                        """) + "\n"
 
                     requirements = ""
                     if len(spec["flags"]) != 0:
@@ -101,51 +169,53 @@ def c_generator():
                         |DECR|{decr_support}|
                     """)
 
-                    header_files[spec['class']] += inspect.cleandoc(
-                        header_fmt_str.format(
-                            file,
-                            spec['name'].upper(), spec['ids']['syscall_id'],
-                            spec['brief'],
-                            "\n" + "".join(
-                                [f"{req_line}\n" for req_line in requirements.split("\n")],
-                            ),
-                            "".join(
-                                [f" * \\param {param['name']} {param['description']}\n" for param in spec["params"]]),
-                            spec["returns"], spec['name'],
-                            ', '.join([f"{param['type']} {param['name']}" for param in spec["params"]])
+                    if spec_defines_prx_export:
+                        generated_libraries[prx_lib_name].files["exports.c"] += "\n" + prx_def_file.format(
+                            "".join([f"{x[0].upper()}{x[1:]}" for x in spec["name"].split("_")]),
+                                                spec["ids"]["prx_id"]
                         )
-                    )
-                    header_files[spec['class']] += "\n\n"
 
-                    assembly_file += inspect.cleandoc(
-                        assembly_fmt_str.format(spec['name'],
-                                                spec['name'],
-                                                spec['ids']['syscall_id'])
-                    )
-                    assembly_file += "\n\n"
-
-                    print(f"Parsed {file} ({i}/{total})")
+                    # if "syscall_id" in spec["ids"].keys():
+                    #     if f"{spec['class']}_syscalls" not in header_files.keys():
+                    #         header_files[f"{spec['class']}_syscalls"] = "#include <ppu-types.h>\n\n"
+                    #
+                    #     header_files[f"{spec['class']}_syscalls"] += inspect.cleandoc(
+                    #         header_fmt_str.format(
+                    #             file,
+                    #             spec['name'].upper(), spec['ids']['syscall_id'],
+                    #             spec['brief'],
+                    #             "\n" + "".join(
+                    #                 [f"{req_line}\n" for req_line in requirements.split("\n")],
+                    #             ),
+                    #             "".join(
+                    #                 [f" * \\param {param['name']} {param['description']}\n" for param in spec["params"]]),
+                    #             spec["returns"], spec['name'],
+                    #             ', '.join([f"{param['type']} {param['name']}" for param in spec["params"]])
+                    #         )
+                    #     )
+                    #     header_files[f"{spec['class']}_syscalls"] += "\n\n"
+                    #
+                    #     assembly_file += inspect.cleandoc(
+                    #         assembly_fmt_str.format(spec['name'],
+                    #                                 spec['name'],
+                    #                                 spec['ids']['syscall_id'])
+                    #     )
+                    #     assembly_file += "\n\n"
+                    #
+                    print(f"Parsed {file} ({i}/{total} - {int(i / total * 100)}%)")
 
     try:
         os.mkdir("generated")
+        os.mkdir("generated/sprx")
+        os.mkdir("generated/syscall")
     except FileExistsError:
         pass
 
-    with open("generated/syscalls.S", mode="w") as f:
-        f.write(assembly_file)
-
-    header_files["syscalls"] += "\n"
-
-    for file in [name for name in header_files.keys() if name != "syscalls"]:
-        header_files["syscalls"] += '\n#include "{}.h"'.format(file)
-
-    header_files["syscalls"] += "\n"
-
-    header_files["syscalls"] += "\n#endif"
-
-    for file in header_files.keys():
-        with open(f"generated/{file}.h", mode="w") as f:
-            f.write(header_files[file])
+    for lib in generated_libraries.values():
+        if lib.type == LibType.PRX:
+            lib.write_to_disk("generated/sprx/")
+        else:
+            lib.write_to_disk("generated/syscall/")
 
 
 def ask_param(question, default=None, no_response=False):
