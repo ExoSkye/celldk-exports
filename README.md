@@ -8,6 +8,10 @@ Also, if the `generate.py` script is passed `upgrade` as the only argument, then
 
 To use this script, you need to have `clang-format` installed on your machine and available in path.
 
+## Credits
+
+Some parts of this come from PSL1GHT, for example, the files in common are modified versions of the PSL1GHT SPRX common files.
+
 ## Example flow
 This is an example flow for adding a spec and generating the source files:
 ```

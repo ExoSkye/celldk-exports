@@ -9,14 +9,8 @@ from jsonschema import validate
 from enum import Enum
 
 
-def get_schema():
-    with open("schema.json", "r") as f:
-        schema = json.load(f)
-    return schema
-
-
-def validate_json(json_data):
-    execute_api_schema = get_schema()
+def validate_json(json_data, json_schema):
+    execute_api_schema = json_schema()
 
     try:
         validate(instance=json_data, schema=execute_api_schema)
@@ -25,6 +19,26 @@ def validate_json(json_data):
         return False
 
     return True
+
+
+def get_export_schema():
+    with open("syscall_def.json", "r") as f:
+        schema = json.load(f)
+    return schema
+
+
+def validate_export_def(json_data):
+    return validate_json(json_data, get_export_schema)
+
+
+def get_lib_def_schema():
+    with open("syscall_def.json", "r") as f:
+        schema = json.load(f)
+    return schema
+
+
+def validate_lib_def(json_data):
+    return validate_json(json_data, get_lib_def_schema)
 
 
 class LibType(Enum):
@@ -105,18 +119,18 @@ def c_generator():
     EXPORT({}, {})
     """)
 
-    files_and_roots = [(files, root) for root, _, files in os.walk("specs", topdown=False)]
+    files_and_roots = [(files, dirs, root) for root, dirs, files in os.walk("specs", topdown=False)]
 
-    total = len(list(chain(*[files for files, _ in files_and_roots])))
+    total = len(list(chain(*[files for files, _, _ in files_and_roots])))
     i = 0
 
-    for files, root in files_and_roots:
+    for files, dirs, root in files_and_roots:
         for file in files:
             i += 1
             if file.split(".")[-1] == "json":
                 with open(os.path.join(root, file)) as f:
                     spec = json.load(f)
-                    if not validate_json(spec):
+                    if not validate_export_def(spec):
                         print(f"{file} isn't conformant to the schema, skipping")
                         continue
 
@@ -135,9 +149,10 @@ def c_generator():
                         generated_libraries[prx_lib_name] = Library(prx_lib_name, LibType.PRX)
                         generated_libraries[prx_lib_name].files["CMakeLists.txt"] = cmake_prx_file.format(
                             spec["class"], spec["class"])
-                        generated_libraries[prx_lib_name].files["exports.c"] = inspect.cleandoc("""
-                            #include <sprx_common.h>
-                        """) + "\n"
+                        generated_libraries[prx_lib_name].files["exports.h"] = ""
+                        generated_libraries[prx_lib_name].files["config.h"] = inspect.cleandoc("""
+                            
+                        """)
 
                     requirements = ""
                     if len(spec["flags"]) != 0:
@@ -170,7 +185,7 @@ def c_generator():
                     """)
 
                     if spec_defines_prx_export:
-                        generated_libraries[prx_lib_name].files["exports.c"] += "\n" + prx_def_file.format(
+                        generated_libraries[prx_lib_name].files["exports.h"] += "\n" + prx_def_file.format(
                             "".join([f"{x[0].upper()}{x[1:]}" for x in spec["name"].split("_")]),
                                                 spec["ids"]["prx_id"]
                         )

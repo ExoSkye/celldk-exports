@@ -1,0 +1,55 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "type": "object",
+  "properties": {
+    "name": {
+      "type": "string"
+    },
+    "path": {
+      "type": "string"
+    },
+    "lib_type": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "enum": [
+          "syscall",
+          "sprx"
+        ]
+      }
+    },
+    "prx_info": {
+      "type": "object",
+      "properties": {
+        "symbol": {
+          "type": "string"
+        },
+        "header1": {
+          "type": "string"
+        },
+        "header2": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "header1",
+        "header2"
+      ]
+    }
+  },
+  "if": {
+    "properties": {
+      "lib_type": {
+        "contains": {
+          "const": "sprx"
+        }
+      }
+    }
+  },
+  "then": {
+    "required": ["name", "lib_type", "prx_info"]
+  },
+  "else": {
+    "required": ["name", "lib_type"]
+  }
+}
