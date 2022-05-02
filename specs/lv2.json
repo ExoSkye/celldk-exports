@@ -1,9 +1,9 @@
 {
-  "name": "sysfs",
-  "path": "fs",
+  "name": "lv2",
+  "path": "lv2",
   "lib_type": ["syscall", "sprx"],
   "prx_info": {
-    "symbol": "sys_fs",
+    "symbol": "sysPrxForUser",
     "header1": "0x2c000001",
     "header2": "0x0009"
   }

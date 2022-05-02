@@ -7,6 +7,7 @@ from subprocess import run
 import jsonschema
 from jsonschema import validate
 from enum import Enum
+import shutil
 
 
 def validate_json(json_data, json_schema):
@@ -32,7 +33,7 @@ def validate_export_def(json_data):
 
 
 def get_lib_def_schema():
-    with open("syscall_def.json", "r") as f:
+    with open("library_def.json", "r") as f:
         schema = json.load(f)
     return schema
 
@@ -54,7 +55,8 @@ class Library:
 
     def write_to_disk(self, prefix: str):
         try:
-            os.mkdir(prefix + self.name)
+            os.mkdir(os.path.join(prefix, self.name))
+            os.mkdir(os.path.join(prefix, self.name, "include"))
         except FileExistsError:
             pass
 
@@ -101,7 +103,7 @@ def c_generator():
         message(FATAL_ERROR "The PS3DK Toolchain File must be used to build this library")
     endif()
     
-    add_library({}_syscalls STATIC {})
+    add_library({}_syscalls STATIC syscalls.h syscalls.S)
     """)
 
     cmake_prx_file = inspect.cleandoc("""
@@ -112,49 +114,72 @@ def c_generator():
         message(FATAL_ERROR "The PS3DK Toolchain File must be used to build this library")
     endif()
     
-    add_library({}_prx STATIC exports.c)
+    add_library({}_prx STATIC ../common/export.S ../common/libexport.c)
     """)
 
     prx_def_file = inspect.cleandoc("""
     EXPORT({}, {})
     """)
 
-    files_and_roots = [(files, dirs, root) for root, dirs, files in os.walk("specs", topdown=False)]
+    prx_config_file = inspect.cleandoc("""
+    #define LIBRARY_NAME		"{}"
+    #define LIBRARY_SYMBOL		{}
+    
+    #define LIBRARY_HEADER_1	{}
+    #define LIBRARY_HEADER_2	{}
+    """)
 
-    total = len(list(chain(*[files for files, _, _ in files_and_roots])))
-    i = 0
+    search_dirs = {}
 
-    for files, dirs, root in files_and_roots:
-        for file in files:
-            i += 1
-            if file.split(".")[-1] == "json":
-                with open(os.path.join(root, file)) as f:
-                    spec = json.load(f)
-                    if not validate_export_def(spec):
-                        print(f"{file} isn't conformant to the schema, skipping")
-                        continue
+    for file in [x for x in os.listdir("specs") if os.path.isfile(os.path.join("specs", x))]:
+        if file.split(".")[-1] == "json":
+            with open(f"specs/{file}") as f:
+                lib_def = json.load(f)
+                if not validate_lib_def(lib_def):
+                    print(f"Library definition {file} is not conformant to schema, skipping")
+                    continue
 
-                    syscall_lib_name = spec["class"] + "_syscalls"
-                    prx_lib_name = spec["class"] + "_prx"
+                if lib_def["path"] not in search_dirs.keys():
+                    search_dirs[lib_def["path"]] = []
 
-                    spec_defines_syscall = spec["ids"].get("syscall_id", None) is not None
-                    spec_defines_prx_export = spec["ids"].get("prx_id", None) is not None
+                if "syscall" in lib_def["lib_type"]:
+                    sc_lib = Library(f"{lib_def['name']}_syscalls", LibType.Syscall)
+                    generated_libraries[sc_lib.name] = sc_lib
+                    generated_libraries[sc_lib.name].files["CMakeLists.txt"] = cmake_syscall_file.format(
+                        sc_lib.name, sc_lib.name, "{}"
+                    )
 
-                    if spec_defines_syscall and syscall_lib_name not in generated_libraries.keys():
-                        generated_libraries[syscall_lib_name] = Library(syscall_lib_name, LibType.Syscall)
-                        generated_libraries[syscall_lib_name].files["CMakeLists.txt"] = cmake_syscall_file.format(
-                            spec["class"], spec["class"], "{}")
+                    generated_libraries[sc_lib.name].files["syscalls.S"] = ""
+                    generated_libraries[sc_lib.name].files["syscalls.h"] = "#include <ppu-types.h>\n\n"
 
-                    if spec_defines_prx_export and prx_lib_name not in generated_libraries.keys():
-                        generated_libraries[prx_lib_name] = Library(prx_lib_name, LibType.PRX)
-                        generated_libraries[prx_lib_name].files["CMakeLists.txt"] = cmake_prx_file.format(
-                            spec["class"], spec["class"])
-                        generated_libraries[prx_lib_name].files["exports.h"] = ""
-                        generated_libraries[prx_lib_name].files["config.h"] = inspect.cleandoc("""
-                            
-                        """)
+                    search_dirs[lib_def["path"]].append(sc_lib.name)
 
-                    requirements = ""
+                if "sprx" in lib_def["lib_type"]:
+                    sprx_lib = Library(f"{lib_def['name']}_sprx", LibType.PRX)
+                    generated_libraries[sprx_lib.name] = sprx_lib
+                    generated_libraries[sprx_lib.name].files["CMakeLists.txt"] = cmake_prx_file.format(
+                        sprx_lib.name, sprx_lib.name, "{}"
+                    )
+
+                    generated_libraries[sprx_lib.name].files["exports.h"] = ""
+                    generated_libraries[sprx_lib.name].files["config.h"] = prx_config_file.format(
+                        lib_def["prx_info"]["symbol"], lib_def["prx_info"]["symbol"],
+                        lib_def["prx_info"]["header1"], lib_def["prx_info"]["header2"],
+                    )
+
+                    search_dirs[lib_def["path"]].append(sprx_lib.name)
+
+    for search_dir in search_dirs:
+        for root, dirs, files in os.walk(f"specs/{search_dir}", topdown=False):
+            for file in files:
+                if file.split(".")[-1] == "json":
+                    with open(os.path.join(root, file)) as f:
+                        spec = json.load(f)
+                        if not validate_export_def(spec):
+                            print(f"{file} isn't conformant to the schema, skipping")
+                            continue
+
+                        requirements = ""
                     if len(spec["flags"]) != 0:
                         requirements += inspect.cleandoc("""
                             Required flags:
@@ -184,53 +209,29 @@ def c_generator():
                         |DECR|{decr_support}|
                     """)
 
-                    if spec_defines_prx_export:
-                        generated_libraries[prx_lib_name].files["exports.h"] += "\n" + prx_def_file.format(
-                            "".join([f"{x[0].upper()}{x[1:]}" for x in spec["name"].split("_")]),
-                                                spec["ids"]["prx_id"]
-                        )
-
-                    # if "syscall_id" in spec["ids"].keys():
-                    #     if f"{spec['class']}_syscalls" not in header_files.keys():
-                    #         header_files[f"{spec['class']}_syscalls"] = "#include <ppu-types.h>\n\n"
-                    #
-                    #     header_files[f"{spec['class']}_syscalls"] += inspect.cleandoc(
-                    #         header_fmt_str.format(
-                    #             file,
-                    #             spec['name'].upper(), spec['ids']['syscall_id'],
-                    #             spec['brief'],
-                    #             "\n" + "".join(
-                    #                 [f"{req_line}\n" for req_line in requirements.split("\n")],
-                    #             ),
-                    #             "".join(
-                    #                 [f" * \\param {param['name']} {param['description']}\n" for param in spec["params"]]),
-                    #             spec["returns"], spec['name'],
-                    #             ', '.join([f"{param['type']} {param['name']}" for param in spec["params"]])
-                    #         )
-                    #     )
-                    #     header_files[f"{spec['class']}_syscalls"] += "\n\n"
-                    #
-                    #     assembly_file += inspect.cleandoc(
-                    #         assembly_fmt_str.format(spec['name'],
-                    #                                 spec['name'],
-                    #                                 spec['ids']['syscall_id'])
-                    #     )
-                    #     assembly_file += "\n\n"
-                    #
-                    print(f"Parsed {file} ({i}/{total} - {int(i / total * 100)}%)")
-
     try:
         os.mkdir("generated")
         os.mkdir("generated/sprx")
-        os.mkdir("generated/syscall")
+        shutil.copytree("common", "generated/sprx/common")
+        os.mkdir("generated/syscalls")
     except FileExistsError:
         pass
 
+    cmake_libs_combined = inspect.cleandoc("""
+    cmake_minimum_required(VERSION 3.0)
+    project(celldk_hi_libraries)
+    """) + "\n\n"
+
     for lib in generated_libraries.values():
         if lib.type == LibType.PRX:
+            cmake_libs_combined += f"add_subdirectory(sprx/{lib.name})\n"
             lib.write_to_disk("generated/sprx/")
         else:
-            lib.write_to_disk("generated/syscall/")
+            cmake_libs_combined += f"add_subdirectory(syscalls/{lib.name})\n"
+            lib.write_to_disk("generated/syscalls/")
+
+    with open("generated/CMakeLists.txt", "w") as f:
+        f.write(cmake_libs_combined)
 
 
 def ask_param(question, default=None, no_response=False):
