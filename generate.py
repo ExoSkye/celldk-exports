@@ -48,10 +48,11 @@ class LibType(Enum):
 
 
 class Library:
-    def __init__(self, _name: str, _type: LibType):
+    def __init__(self, _name: str, _type: LibType, _header_name: str):
         self.type = _type
         self.name = _name
         self.files = {}
+        self.header_name = _header_name
 
     def write_to_disk(self, prefix: str):
         try:
@@ -77,7 +78,6 @@ def c_generator():
 
     header_fmt_str = inspect.cleandoc("""
     // {}
-    #define {}_ID {}
     
     /*! \\brief {}.
         {}
@@ -143,7 +143,7 @@ def c_generator():
                     search_dirs[lib_def["path"]] = []
 
                 if "syscall" in lib_def["lib_type"]:
-                    sc_lib = Library(f"{lib_def['name']}_syscalls", LibType.Syscall)
+                    sc_lib = Library(f"{lib_def['name']}_syscalls", LibType.Syscall, f"{lib_def['name']}.h")
                     generated_libraries[sc_lib.name] = sc_lib
                     generated_libraries[sc_lib.name].files["CMakeLists.txt"] = cmake_syscall_file.format(
                         sc_lib.name, sc_lib.name, "{}"
@@ -155,7 +155,7 @@ def c_generator():
                     search_dirs[lib_def["path"]].append(sc_lib.name)
 
                 if "sprx" in lib_def["lib_type"]:
-                    sprx_lib = Library(f"{lib_def['name']}_sprx", LibType.PRX)
+                    sprx_lib = Library(f"{lib_def['name']}_sprx", LibType.PRX, f"{lib_def['name']}.h")
                     generated_libraries[sprx_lib.name] = sprx_lib
                     generated_libraries[sprx_lib.name].files["CMakeLists.txt"] = cmake_prx_file.format(
                         sprx_lib.name, sprx_lib.name, "{}"
@@ -218,11 +218,24 @@ def c_generator():
                         if spec["ids"].get("prx_id", None) is not None:
                             for lib in search_dir[1]:
                                 if lib.endswith("_sprx"):
+                                    
                                     generated_libraries[lib].files["exports.h"] += "\n" + prx_def_file.format(
                                         "".join([f"{x[0].upper()}{x[1:]}" for x in spec["name"].split("_")]),
                                         spec["ids"]["prx_id"])
 
-                                    generated_libraries[lib].files[""]
+                                    generated_libraries[lib].files[generated_libraries[lib].header_name] += "\n" + 
+                                        header_fmt_str.format(
+                                            file,
+                                            spec['name'].upper(), spec['ids']['syscall_id'],
+                                            spec['brief'],
+                                            "\n" + "".join(
+                                                [f"{req_line}\n" for req_line in requirements.split("\n")],
+                                            ),
+                                            "".join(
+                                                [f" * \\param {param['name']} {param['description']}\n" for param in spec["params"]]),
+                                            spec["returns"], spec['name'],
+                                            ', '.join([f"{param['type']} {param['name']}" for param in spec["params"]])
+                                        )
 
     try:
         os.mkdir("generated")
