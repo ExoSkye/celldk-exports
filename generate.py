@@ -218,7 +218,7 @@ def c_generator():
 
                         if spec["ids"].get("prx_id", None) is not None:
                             for lib in search_dir[1]:
-                                if generated_libraries[lib].type == LibType.SPRX:
+                                if generated_libraries[lib].type == LibType.PRX:
                                     generated_libraries[lib].files["exports.h"] += "\n" + prx_def_file.format(
                                         "".join([f"{x[0].upper()}{x[1:]}" for x in spec["name"].split("_")]),
                                         spec["ids"]["prx_id"])
