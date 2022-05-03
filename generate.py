@@ -231,12 +231,12 @@ def c_generator():
                                 ', '.join([f"{param['type']} {param['name']}" for param in spec["params"]])
                             )
 
-                            if lib.type == LibType.SPRX:
+                            if lib.type == LibType.SPRX and spec['ids'].get('sprx_id', None) is not None:
                                 lib.files["exports.h"] += "\n" + sprx_def_file.format(
                                     "".join([f"{x[0].upper()}{x[1:]}" for x in spec["name"].split("_")]),
                                     spec["ids"]["sprx_id"])
 
-                            if lib.type == LibType.Syscall:
+                            if lib.type == LibType.Syscall and spec['ids'].get('syscall_id', None) is not None:
                                 lib.files["syscalls.S"] += "\n" + assembly_fmt_str.format(
                                     spec['name'],
                                     spec['name'],
