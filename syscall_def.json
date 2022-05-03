@@ -19,16 +19,8 @@
         },
         {
           "properties": {
-            "prx_info": {
-              "type": "object",
-              "properties": {
-                "prx_id": {
-                  "type": "string"
-                },
-                "lib_id": {
-                  "type": "string"
-                }
-              }
+            "prx_id": {
+              "type": "integer"
             }
           },
           "required": ["prx_id"]
