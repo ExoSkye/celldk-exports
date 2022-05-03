@@ -167,47 +167,60 @@ def c_generator():
                         lib_def["prx_info"]["header1"], lib_def["prx_info"]["header2"],
                     )
 
+                    generated_libraries[sprx_lib.name].files[f"{lib_def['name']}.h"] = "#include <ppu-types.h>\n\n"
+
                     search_dirs[lib_def["path"]].append(sprx_lib.name)
 
-    for search_dir in search_dirs:
-        for root, dirs, files in os.walk(f"specs/{search_dir}", topdown=False):
+    for search_dir in search_dirs.items():
+        for root, dirs, files in os.walk(f"specs/{search_dir[0]}", topdown=False):
             for file in files:
                 if file.split(".")[-1] == "json":
                     with open(os.path.join(root, file)) as f:
+
+                        print(f"Parsing {file}")
+
                         spec = json.load(f)
                         if not validate_export_def(spec):
                             print(f"{file} isn't conformant to the schema, skipping")
                             continue
 
                         requirements = ""
-                    if len(spec["flags"]) != 0:
-                        requirements += inspect.cleandoc("""
-                            Required flags:
+
+                        if len(spec["flags"]) != 0:
+                            requirements += inspect.cleandoc("""
+                                Required flags:
+                            """)
+                            for flag in spec["flags"]:
+                                requirements += f"\n- {flag}\n\n"
+
+                        cex_support = "×"
+                        dex_support = "×"
+                        decr_support = "×"
+
+                        if "CEX" in spec["firmwares"]:
+                            cex_support = "✓"
+
+                        if "DEX" in spec["firmwares"]:
+                            dex_support = "✓"
+
+                        if "DECR" in spec["firmwares"]:
+                            decr_support = "✓"
+
+                        requirements += inspect.cleandoc(f"""
+                            Firmware support:
+                            |Firmware|Supported|
+                            |--------|---------|
+                            |CEX|{cex_support}|
+                            |DEX|{dex_support}|
+                            |DECR|{decr_support}|
                         """)
-                        for flag in spec["flags"]:
-                            requirements += f"\n- {flag}\n\n"
 
-                    cex_support = "×"
-                    dex_support = "×"
-                    decr_support = "×"
-
-                    if "CEX" in spec["firmwares"]:
-                        cex_support = "✓"
-
-                    if "DEX" in spec["firmwares"]:
-                        dex_support = "✓"
-
-                    if "DECR" in spec["firmwares"]:
-                        decr_support = "✓"
-
-                    requirements += inspect.cleandoc(f"""
-                        Firmware support:
-                        |Firmware|Supported|
-                        |--------|---------|
-                        |CEX|{cex_support}|
-                        |DEX|{dex_support}|
-                        |DECR|{decr_support}|
-                    """)
+                        if spec["ids"].get("prx_id", None) is not None:
+                            for lib in search_dir[1]:
+                                if lib.endswith("_sprx"):
+                                    generated_libraries[lib].files["exports.h"] += "\n" + prx_def_file.format(
+                                        "".join([f"{x[0].upper()}{x[1:]}" for x in spec["name"].split("_")]),
+                                        spec["ids"]["prx_id"])
 
     try:
         os.mkdir("generated")
