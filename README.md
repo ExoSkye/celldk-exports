@@ -43,7 +43,7 @@ This then generates this JSON file in `specs`:
   "name": "sys_process_get_sdk_version",
   "id": 25,
   "returns": "int",
-  "brief": "Returns the SDK version of a lv2",
+  "brief": "Returns the SDK version of a process",
   "class": "sys_process",
   "params": [
     {
