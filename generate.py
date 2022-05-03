@@ -144,7 +144,7 @@ def c_generator():
                     search_dirs[lib_def["path"]] = []
 
                 if "syscall" in lib_def["lib_type"]:
-                    sc_lib = Library(f"{lib_def['name']}_syscalls", LibType.Syscall, f"{lib_def['name']}.h")
+                    sc_lib = Library(f"{lib_def['name']}_syscalls", LibType.Syscall, f"include/{lib_def['name']}.h")
                     generated_libraries[sc_lib.name] = sc_lib
                     generated_libraries[sc_lib.name].files["CMakeLists.txt"] = cmake_syscall_file.format(
                         sc_lib.name, sc_lib.name, "{}"
@@ -156,7 +156,7 @@ def c_generator():
                     search_dirs[lib_def["path"]].append(sc_lib.name)
 
                 if "sprx" in lib_def["lib_type"]:
-                    sprx_lib = Library(f"{lib_def['name']}_sprx", LibType.PRX, f"{lib_def['name']}.h")
+                    sprx_lib = Library(f"{lib_def['name']}_sprx", LibType.PRX, f"include/{lib_def['name']}.h")
                     generated_libraries[sprx_lib.name] = sprx_lib
                     generated_libraries[sprx_lib.name].files["CMakeLists.txt"] = cmake_prx_file.format(
                         sprx_lib.name, sprx_lib.name, "{}"
