@@ -62,8 +62,9 @@ class Library:
             pass
 
         for file in self.files.keys():
-            with open(prefix + self.name + "/" + file, "w") as f:
+            with open(os.path.join(prefix, self.name, file), "w") as f:
                 f.write(self.files[file])
+                run(['clang-format', '-i', os.path.join(prefix, self.name, file)])
 
 
 def c_generator():
@@ -167,7 +168,7 @@ def c_generator():
                         lib_def["prx_info"]["header1"], lib_def["prx_info"]["header2"],
                     )
 
-                    generated_libraries[sprx_lib.name].files[f"{lib_def['name']}.h"] = "#include <ppu-types.h>\n\n"
+                    generated_libraries[sprx_lib.name].files[f"include/{lib_def['name']}.h"] = "#include <ppu-types.h>\n\n"
 
                     search_dirs[lib_def["path"]].append(sprx_lib.name)
 
@@ -217,8 +218,7 @@ def c_generator():
 
                         if spec["ids"].get("prx_id", None) is not None:
                             for lib in search_dir[1]:
-                                if lib.endswith("_sprx"):
-                                    
+                                if generated_libraries[lib].type == LibType.SPRX:
                                     generated_libraries[lib].files["exports.h"] += "\n" + prx_def_file.format(
                                         "".join([f"{x[0].upper()}{x[1:]}" for x in spec["name"].split("_")]),
                                         spec["ids"]["prx_id"])
@@ -234,6 +234,7 @@ def c_generator():
                                             spec["returns"], spec['name'],
                                             ', '.join([f"{param['type']} {param['name']}" for param in spec["params"]])
                                         )
+
 
     try:
         os.mkdir("generated")
