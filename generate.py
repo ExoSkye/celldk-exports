@@ -237,7 +237,7 @@ def c_generator():
                                     spec["ids"]["sprx_id"])
 
                             if lib.type == LibType.Syscall:
-                                lib.files["syscall.S"] += "\n" + assembly_fmt_str.format(
+                                lib.files["syscalls.S"] += "\n" + assembly_fmt_str.format(
                                     spec['name'],
                                     spec['name'],
                                     spec['ids']['syscall_id']
