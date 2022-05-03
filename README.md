@@ -1,6 +1,6 @@
 # CellDK-Exports
 
-This repository contains source files to generate the assembly files and header files used in PS3DK for calling syscalls and PRX exports, this includes the specifications (`specs` folder) which contain the specifications of the syscalls in JSON format. `generate.py` is used to add specs or generate the source files.
+This repository contains source files to generate the assembly files and header files used in CellDK for calling syscalls and PRX exports, this includes the specifications (`specs` folder) which contain the specifications of the syscalls in JSON format. `generate.py` is used to add specs or generate the source files.
 
 The `generate.py` script can be used to add specifications by running it with any arguments. For example, if the first argument anything other than `add` then that is used as the filename.
 

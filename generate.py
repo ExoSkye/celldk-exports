@@ -100,7 +100,7 @@ def c_generator():
     project({}_syscalls LANGUAGES C ASM)
     
     if(CMAKE_TOOLCHAIN_FILE STREQUAL "")
-        message(FATAL_ERROR "The PS3DK Toolchain File must be used to build this library")
+        message(FATAL_ERROR "The CellDK Toolchain File must be used to build this library")
     endif()
     
     add_library({}_syscalls STATIC syscalls.h syscalls.S)
@@ -111,7 +111,7 @@ def c_generator():
     project({}_prx LANGUAGES C)
     
     if(CMAKE_TOOLCHAIN_FILE STREQUAL "")
-        message(FATAL_ERROR "The PS3DK Toolchain File must be used to build this library")
+        message(FATAL_ERROR "The CellDK Toolchain File must be used to build this library")
     endif()
     
     add_library({}_prx STATIC ../common/export.S ../common/libexport.c)
@@ -221,6 +221,8 @@ def c_generator():
                                     generated_libraries[lib].files["exports.h"] += "\n" + prx_def_file.format(
                                         "".join([f"{x[0].upper()}{x[1:]}" for x in spec["name"].split("_")]),
                                         spec["ids"]["prx_id"])
+
+                                    generated_libraries[lib].files[""]
 
     try:
         os.mkdir("generated")
