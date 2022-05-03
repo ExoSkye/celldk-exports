@@ -44,7 +44,7 @@ def validate_lib_def(json_data):
 
 class LibType(Enum):
     Syscall = 0
-    PRX = 1
+    SPRX = 1
 
 
 class Library:
@@ -107,22 +107,22 @@ def c_generator():
     add_library({}_syscalls STATIC syscalls.h syscalls.S)
     """)
 
-    cmake_prx_file = inspect.cleandoc("""
+    cmake_sprx_file = inspect.cleandoc("""
     cmake_minimum_required(VERSION 3.0)
-    project({}_prx LANGUAGES C)
+    project({}_sprx LANGUAGES C)
     
     if(CMAKE_TOOLCHAIN_FILE STREQUAL "")
         message(FATAL_ERROR "The CellDK Toolchain File must be used to build this library")
     endif()
     
-    add_library({}_prx STATIC ../common/export.S ../common/libexport.c)
+    add_library({}_sprx STATIC ../common/export.S ../common/libexport.c)
     """)
 
-    prx_def_file = inspect.cleandoc("""
+    sprx_def_file = inspect.cleandoc("""
     EXPORT({}, {})
     """)
 
-    prx_config_file = inspect.cleandoc("""
+    sprx_config_file = inspect.cleandoc("""
     #define LIBRARY_NAME		"{}"
     #define LIBRARY_SYMBOL		{}
     
@@ -156,16 +156,16 @@ def c_generator():
                     search_dirs[lib_def["path"]].append(sc_lib.name)
 
                 if "sprx" in lib_def["lib_type"]:
-                    sprx_lib = Library(f"{lib_def['name']}_sprx", LibType.PRX, f"include/{lib_def['name']}.h")
+                    sprx_lib = Library(f"{lib_def['name']}_sprx", LibType.SPRX, f"include/{lib_def['name']}.h")
                     generated_libraries[sprx_lib.name] = sprx_lib
-                    generated_libraries[sprx_lib.name].files["CMakeLists.txt"] = cmake_prx_file.format(
+                    generated_libraries[sprx_lib.name].files["CMakeLists.txt"] = cmake_sprx_file.format(
                         sprx_lib.name, sprx_lib.name, "{}"
                     )
 
                     generated_libraries[sprx_lib.name].files["exports.h"] = ""
-                    generated_libraries[sprx_lib.name].files["config.h"] = prx_config_file.format(
-                        lib_def["prx_info"]["symbol"], lib_def["prx_info"]["symbol"],
-                        lib_def["prx_info"]["header1"], lib_def["prx_info"]["header2"],
+                    generated_libraries[sprx_lib.name].files["config.h"] = sprx_config_file.format(
+                        lib_def["sprx_info"]["symbol"], lib_def["sprx_info"]["symbol"],
+                        lib_def["sprx_info"]["header1"], lib_def["sprx_info"]["header2"],
                     )
 
                     generated_libraries[sprx_lib.name].files[f"include/{lib_def['name']}.h"] = "#include <ppu-types.h>\n\n"
@@ -216,12 +216,12 @@ def c_generator():
                             |DECR|{decr_support}|
                         """)
 
-                        if spec["ids"].get("prx_id", None) is not None:
+                        if spec["ids"].get("sprx_id", None) is not None:
                             for lib in search_dir[1]:
-                                if generated_libraries[lib].type == LibType.PRX:
-                                    generated_libraries[lib].files["exports.h"] += "\n" + prx_def_file.format(
+                                if generated_libraries[lib].type == LibType.SPRX:
+                                    generated_libraries[lib].files["exports.h"] += "\n" + sprx_def_file.format(
                                         "".join([f"{x[0].upper()}{x[1:]}" for x in spec["name"].split("_")]),
-                                        spec["ids"]["prx_id"])
+                                        spec["ids"]["sprx_id"])
 
                                     generated_libraries[lib].files[generated_libraries[lib].header_name] += "\n" + header_fmt_str.format(
                                             file,
@@ -234,6 +234,8 @@ def c_generator():
                                             spec["returns"], spec['name'],
                                             ', '.join([f"{param['type']} {param['name']}" for param in spec["params"]])
                                         )
+
+                        
 
 
     try:
@@ -250,7 +252,7 @@ def c_generator():
     """) + "\n\n"
 
     for lib in generated_libraries.values():
-        if lib.type == LibType.PRX:
+        if lib.type == LibType.SPRX:
             cmake_libs_combined += f"add_subdirectory(sprx/{lib.name})\n"
             lib.write_to_disk("generated/sprx/")
         else:
@@ -291,14 +293,14 @@ def json_upgrade():
                 data = json.load(f)
 
             if "id" in data.keys():
-                prx_id = ask_param("PRX ID", no_response=True)
+                sprx_id = ask_param("SPRX ID", no_response=True)
 
                 data["ids"] = {
                     "syscall_id": data["id"]
                 }
 
-                if prx_id is not None:
-                    data["ids"]["prx_id"] = prx_id
+                if sprx_id is not None:
+                    data["ids"]["sprx_id"] = sprx_id
 
                 del data["id"]
 

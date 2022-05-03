@@ -18,7 +18,7 @@
         ]
       }
     },
-    "prx_info": {
+    "sprx_info": {
       "type": "object",
       "properties": {
         "symbol": {
@@ -47,7 +47,7 @@
     }
   },
   "then": {
-    "required": ["name", "lib_type", "prx_info"]
+    "required": ["name", "lib_type", "sprx_info"]
   },
   "else": {
     "required": ["name", "lib_type"]

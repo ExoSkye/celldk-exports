@@ -19,11 +19,11 @@
         },
         {
           "properties": {
-            "prx_id": {
+            "sprx_id": {
               "type": "integer"
             }
           },
-          "required": ["prx_id"]
+          "required": ["sprx_id"]
         }
       ]
     },
