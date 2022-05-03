@@ -225,13 +225,12 @@ def c_generator():
 
                                     generated_libraries[lib].files[generated_libraries[lib].header_name] += "\n" + header_fmt_str.format(
                                             file,
-                                            spec['name'].upper(), spec['ids']['syscall_id'],
                                             spec['brief'],
                                             "\n" + "".join(
                                                 [f"{req_line}\n" for req_line in requirements.split("\n")],
                                             ),
                                             "".join(
-                                                [f" * \\param {param['name']} {param['description']}\n" for param in spec["params"]]),
+                                                [f"\\param {param['name']} {param['description']}\n" for param in spec["params"]]),
                                             spec["returns"], spec['name'],
                                             ', '.join([f"{param['type']} {param['name']}" for param in spec["params"]])
                                         )
