@@ -144,14 +144,14 @@ def c_generator():
                     search_dirs[lib_def["path"]] = []
 
                 if "syscall" in lib_def["lib_type"]:
-                    sc_lib = Library(f"{lib_def['name']}_syscalls", LibType.Syscall, f"include/{lib_def['name']}.h")
+                    sc_lib = Library(f"{lib_def['name']}_syscalls", LibType.Syscall, "include/syscalls.h")
                     generated_libraries[sc_lib.name] = sc_lib
                     generated_libraries[sc_lib.name].files["CMakeLists.txt"] = cmake_syscall_file.format(
                         sc_lib.name, sc_lib.name, "{}"
                     )
 
                     generated_libraries[sc_lib.name].files["syscalls.S"] = ""
-                    generated_libraries[sc_lib.name].files["syscalls.h"] = "#include <ppu-types.h>\n\n"
+                    generated_libraries[sc_lib.name].files["include/syscalls.h"] = "#include <ppu-types.h>\n\n"
 
                     search_dirs[lib_def["path"]].append(sc_lib.name)
 
@@ -216,24 +216,32 @@ def c_generator():
                             |DECR|{decr_support}|
                         """)
 
-                        if spec["ids"].get("sprx_id", None) is not None:
-                            for lib in search_dir[1]:
-                                if generated_libraries[lib].type == LibType.SPRX:
-                                    generated_libraries[lib].files["exports.h"] += "\n" + sprx_def_file.format(
-                                        "".join([f"{x[0].upper()}{x[1:]}" for x in spec["name"].split("_")]),
-                                        spec["ids"]["sprx_id"])
+                        for lib_name in search_dir[1]:
+                            lib = generated_libraries[lib_name]
 
-                                    generated_libraries[lib].files[generated_libraries[lib].header_name] += "\n" + header_fmt_str.format(
-                                            file,
-                                            spec['brief'],
-                                            "\n" + "".join(
-                                                [f"{req_line}\n" for req_line in requirements.split("\n")],
-                                            ),
-                                            "".join(
-                                                [f"\\param {param['name']} {param['description']}\n" for param in spec["params"]]),
-                                            spec["returns"], spec['name'],
-                                            ', '.join([f"{param['type']} {param['name']}" for param in spec["params"]])
-                                        )
+                            lib.files[lib.header_name] += "\n" + header_fmt_str.format(
+                                file,
+                                spec['brief'],
+                                "\n" + "".join(
+                                    [f"{req_line}\n" for req_line in requirements.split("\n")],
+                                ),
+                                "".join(
+                                    [f"\\param {param['name']} {param['description']}\n" for param in spec["params"]]),
+                                spec["returns"], spec['name'],
+                                ', '.join([f"{param['type']} {param['name']}" for param in spec["params"]])
+                            )
+
+                            if lib.type == LibType.SPRX:
+                                lib.files["exports.h"] += "\n" + sprx_def_file.format(
+                                    "".join([f"{x[0].upper()}{x[1:]}" for x in spec["name"].split("_")]),
+                                    spec["ids"]["sprx_id"])
+
+                            if lib.type == LibType.Syscall:
+                                lib.files["syscall.S"] += "\n" + assembly_fmt_str.format(
+                                    spec['name'],
+                                    spec['name'],
+                                    spec['ids']['syscall_id'])
+                                ) + "\n"
 
                         
 
