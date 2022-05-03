@@ -223,8 +223,7 @@ def c_generator():
                                         "".join([f"{x[0].upper()}{x[1:]}" for x in spec["name"].split("_")]),
                                         spec["ids"]["prx_id"])
 
-                                    generated_libraries[lib].files[generated_libraries[lib].header_name] += "\n" + 
-                                        header_fmt_str.format(
+                                    generated_libraries[lib].files[generated_libraries[lib].header_name] += "\n" + header_fmt_str.format(
                                             file,
                                             spec['name'].upper(), spec['ids']['syscall_id'],
                                             spec['brief'],
