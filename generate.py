@@ -240,7 +240,7 @@ def c_generator():
                                 lib.files["syscall.S"] += "\n" + assembly_fmt_str.format(
                                     spec['name'],
                                     spec['name'],
-                                    spec['ids']['syscall_id'])
+                                    spec['ids']['syscall_id']
                                 ) + "\n"
 
                         
