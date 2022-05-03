@@ -3,8 +3,8 @@ var indexSectionsWithContent =
   0: "_cefhilnsz",
   1: "_",
   2: "cels",
-  3: "_",
-  4: "fhinsz",
+  3: "_s",
+  4: "fhinz",
   5: "el"
 };
 

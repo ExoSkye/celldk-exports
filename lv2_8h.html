@@ -67,7 +67,7 @@ $(function() {
 </div><!-- top -->
 <div class="header">
   <div class="summary">
-<a href="#var-members">Variables</a>  </div>
+<a href="#func-members">Functions</a>  </div>
   <div class="headertitle">
 <div class="title">lv2.h File Reference</div>  </div>
 </div><!--header-->
@@ -76,34 +76,46 @@ $(function() {
 </div>
 <p><a href="lv2_8h_source.html">Go to the source code of this file.</a></p>
 <table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="var-members"></a>
-Variables</h2></td></tr>
-<tr class="memitem:a8a1f61f452ac6df65ea908fb8e26ff58"><td class="memItemLeft" align="right" valign="top">Firmware&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="lv2_8h.html#a8a1f61f452ac6df65ea908fb8e26ff58">support</a></td></tr>
-<tr class="memdesc:a8a1f61f452ac6df65ea908fb8e26ff58"><td class="mdescLeft">&#160;</td><td class="mdescRight">SYS_PROCESS_EXIT. 3 Exits the current process.  <a href="lv2_8h.html#a8a1f61f452ac6df65ea908fb8e26ff58">More...</a><br /></td></tr>
-<tr class="separator:a8a1f61f452ac6df65ea908fb8e26ff58"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
+Functions</h2></td></tr>
+<tr class="memitem:af1b464864f9fab6e0f260fdef4b4c225"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="lv2_8h.html#af1b464864f9fab6e0f260fdef4b4c225">sys_process_exit</a> (int ret)</td></tr>
+<tr class="memdesc:af1b464864f9fab6e0f260fdef4b4c225"><td class="mdescLeft">&#160;</td><td class="mdescRight">Exits the current process.  <a href="lv2_8h.html#af1b464864f9fab6e0f260fdef4b4c225">More...</a><br /></td></tr>
+<tr class="separator:af1b464864f9fab6e0f260fdef4b4c225"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
-<h2 class="groupheader">Variable Documentation</h2>
-<a id="a8a1f61f452ac6df65ea908fb8e26ff58"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a8a1f61f452ac6df65ea908fb8e26ff58">&#9670;&nbsp;</a></span>support</h2>
+<h2 class="groupheader">Function Documentation</h2>
+<a id="af1b464864f9fab6e0f260fdef4b4c225"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af1b464864f9fab6e0f260fdef4b4c225">&#9670;&nbsp;</a></span>sys_process_exit()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">Firmware support</td>
+          <td class="memname">int sys_process_exit </td>
+          <td>(</td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>ret</em></td><td>)</td>
+          <td></td>
         </tr>
       </table>
 </div><div class="memdoc">
 
-<p>SYS_PROCESS_EXIT. 3 Exits the current process. </p>
-<p>SYS_FS_LSEEK. 818 Seek to a position in a file.</p>
-<p>SYS_FS_CLOSE. 804 Closes a file descriptor.</p>
-<p>SYS_FS_RENAME. 812 Rename a file.</p>
-<p>SYS_FS_OPEN. 801 Opens a file.</p>
-<p>SYS_FS_READ. 802 Read from a file descriptor.</p>
-<p>SYS_FS_UNLINK. 814 Deletes a file. </p>
-
-<p class="definition">Definition at line <a class="el" href="lv2_8h_source.html#l00018">18</a> of file <a class="el" href="lv2_8h_source.html">lv2.h</a>.</p>
+<p>Exits the current process. </p>
+<p>Firmware support: </p><table class="markdownTable">
+<tr class="markdownTableHead">
+<th class="markdownTableHeadNone">Firmware </th><th class="markdownTableHeadNone">Supported  </th></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone">CEX </td><td class="markdownTableBodyNone">✓  </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone">DEX </td><td class="markdownTableBodyNone">✓  </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone">DECR </td><td class="markdownTableBodyNone">✓  </td></tr>
+</table>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">ret</td><td>The return value </td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>

@@ -67,7 +67,7 @@ $(function() {
 </div><!-- top -->
 <div class="header">
   <div class="summary">
-<a href="#var-members">Variables</a>  </div>
+<a href="#func-members">Functions</a>  </div>
   <div class="headertitle">
 <div class="title">sysfs.h File Reference</div>  </div>
 </div><!--header-->
@@ -76,34 +76,384 @@ $(function() {
 </div>
 <p><a href="sysfs_8h_source.html">Go to the source code of this file.</a></p>
 <table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="var-members"></a>
-Variables</h2></td></tr>
-<tr class="memitem:a8a1f61f452ac6df65ea908fb8e26ff58"><td class="memItemLeft" align="right" valign="top">Firmware&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="sysfs_8h.html#a8a1f61f452ac6df65ea908fb8e26ff58">support</a></td></tr>
-<tr class="memdesc:a8a1f61f452ac6df65ea908fb8e26ff58"><td class="mdescLeft">&#160;</td><td class="mdescRight">SYS_FS_MKDIR. 811 Creates a directory.  <a href="sysfs_8h.html#a8a1f61f452ac6df65ea908fb8e26ff58">More...</a><br /></td></tr>
-<tr class="separator:a8a1f61f452ac6df65ea908fb8e26ff58"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
+Functions</h2></td></tr>
+<tr class="memitem:a290924e23700a501cf343a7dfcf7b493"><td class="memItemLeft" align="right" valign="top">CellFsErrno&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="sysfs_8h.html#a290924e23700a501cf343a7dfcf7b493">sys_fs_mkdir</a> (const char *path, CellFsMode mode)</td></tr>
+<tr class="memdesc:a290924e23700a501cf343a7dfcf7b493"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates a directory.  <a href="sysfs_8h.html#a290924e23700a501cf343a7dfcf7b493">More...</a><br /></td></tr>
+<tr class="separator:a290924e23700a501cf343a7dfcf7b493"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a83e5a1f551f06fa89c8aa763bc8c2743"><td class="memItemLeft" align="right" valign="top">CellFsErrno&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="sysfs_8h.html#a83e5a1f551f06fa89c8aa763bc8c2743">sys_fs_unlink</a> (const char *path)</td></tr>
+<tr class="memdesc:a83e5a1f551f06fa89c8aa763bc8c2743"><td class="mdescLeft">&#160;</td><td class="mdescRight">Deletes a file.  <a href="sysfs_8h.html#a83e5a1f551f06fa89c8aa763bc8c2743">More...</a><br /></td></tr>
+<tr class="separator:a83e5a1f551f06fa89c8aa763bc8c2743"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab4964b157afdd3a9432f28e722e0a718"><td class="memItemLeft" align="right" valign="top">CellFsErrno&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="sysfs_8h.html#ab4964b157afdd3a9432f28e722e0a718">sys_fs_read</a> (u32 fd, void *buf, u64 nbytes, u64 *nwritten)</td></tr>
+<tr class="memdesc:ab4964b157afdd3a9432f28e722e0a718"><td class="mdescLeft">&#160;</td><td class="mdescRight">Read from a file descriptor.  <a href="sysfs_8h.html#ab4964b157afdd3a9432f28e722e0a718">More...</a><br /></td></tr>
+<tr class="separator:ab4964b157afdd3a9432f28e722e0a718"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a88fd1573b8452b7bf0f1f5a7f7754463"><td class="memItemLeft" align="right" valign="top">CellFsErrno&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="sysfs_8h.html#a88fd1573b8452b7bf0f1f5a7f7754463">sys_fs_open</a> (const char *path, u32 flags, u32 *fd, const void *arg, u64 size)</td></tr>
+<tr class="memdesc:a88fd1573b8452b7bf0f1f5a7f7754463"><td class="mdescLeft">&#160;</td><td class="mdescRight">Opens a file.  <a href="sysfs_8h.html#a88fd1573b8452b7bf0f1f5a7f7754463">More...</a><br /></td></tr>
+<tr class="separator:a88fd1573b8452b7bf0f1f5a7f7754463"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a68b84825f0061cbcc47b80790e6f77ca"><td class="memItemLeft" align="right" valign="top">CellFsErrno&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="sysfs_8h.html#a68b84825f0061cbcc47b80790e6f77ca">sys_fs_rename</a> (const char *path, const char *to)</td></tr>
+<tr class="memdesc:a68b84825f0061cbcc47b80790e6f77ca"><td class="mdescLeft">&#160;</td><td class="mdescRight">Rename a file.  <a href="sysfs_8h.html#a68b84825f0061cbcc47b80790e6f77ca">More...</a><br /></td></tr>
+<tr class="separator:a68b84825f0061cbcc47b80790e6f77ca"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a24390bb766457c498e00b2dac4f24fad"><td class="memItemLeft" align="right" valign="top">CellFsErrno&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="sysfs_8h.html#a24390bb766457c498e00b2dac4f24fad">sys_fs_close</a> (u32 fd)</td></tr>
+<tr class="memdesc:a24390bb766457c498e00b2dac4f24fad"><td class="mdescLeft">&#160;</td><td class="mdescRight">Closes a file descriptor.  <a href="sysfs_8h.html#a24390bb766457c498e00b2dac4f24fad">More...</a><br /></td></tr>
+<tr class="separator:a24390bb766457c498e00b2dac4f24fad"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:acf49fffb62da1ebdc2c76aee162096a2"><td class="memItemLeft" align="right" valign="top">CellFsErrno&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="sysfs_8h.html#acf49fffb62da1ebdc2c76aee162096a2">sys_fs_lseek</a> (u32 fd, s64 offset, s32 whence, u64 *pos)</td></tr>
+<tr class="memdesc:acf49fffb62da1ebdc2c76aee162096a2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Seek to a position in a file.  <a href="sysfs_8h.html#acf49fffb62da1ebdc2c76aee162096a2">More...</a><br /></td></tr>
+<tr class="separator:acf49fffb62da1ebdc2c76aee162096a2"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
-<h2 class="groupheader">Variable Documentation</h2>
-<a id="a8a1f61f452ac6df65ea908fb8e26ff58"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a8a1f61f452ac6df65ea908fb8e26ff58">&#9670;&nbsp;</a></span>support</h2>
+<h2 class="groupheader">Function Documentation</h2>
+<a id="a24390bb766457c498e00b2dac4f24fad"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a24390bb766457c498e00b2dac4f24fad">&#9670;&nbsp;</a></span>sys_fs_close()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">Firmware support</td>
+          <td class="memname">CellFsErrno sys_fs_close </td>
+          <td>(</td>
+          <td class="paramtype">u32&#160;</td>
+          <td class="paramname"><em>fd</em></td><td>)</td>
+          <td></td>
         </tr>
       </table>
 </div><div class="memdoc">
 
-<p>SYS_FS_MKDIR. 811 Creates a directory. </p>
-<p>SYS_FS_LSEEK. 818 Seek to a position in a file.</p>
-<p>SYS_FS_CLOSE. 804 Closes a file descriptor.</p>
-<p>SYS_FS_RENAME. 812 Rename a file.</p>
-<p>SYS_FS_OPEN. 801 Opens a file.</p>
-<p>SYS_FS_READ. 802 Read from a file descriptor.</p>
-<p>SYS_FS_UNLINK. 814 Deletes a file. </p>
+<p>Closes a file descriptor. </p>
+<p>Firmware support: </p><table class="markdownTable">
+<tr class="markdownTableHead">
+<th class="markdownTableHeadNone">Firmware </th><th class="markdownTableHeadNone">Supported  </th></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone">CEX </td><td class="markdownTableBodyNone">✓  </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone">DEX </td><td class="markdownTableBodyNone">✓  </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone">DECR </td><td class="markdownTableBodyNone">✓  </td></tr>
+</table>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">fd</td><td>The file descriptor to close </td></tr>
+  </table>
+  </dd>
+</dl>
 
-<p class="definition">Definition at line <a class="el" href="sysfs_8h_source.html#l00019">19</a> of file <a class="el" href="sysfs_8h_source.html">sysfs.h</a>.</p>
+</div>
+</div>
+<a id="acf49fffb62da1ebdc2c76aee162096a2"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#acf49fffb62da1ebdc2c76aee162096a2">&#9670;&nbsp;</a></span>sys_fs_lseek()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">CellFsErrno sys_fs_lseek </td>
+          <td>(</td>
+          <td class="paramtype">u32&#160;</td>
+          <td class="paramname"><em>fd</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">s64&#160;</td>
+          <td class="paramname"><em>offset</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">s32&#160;</td>
+          <td class="paramname"><em>whence</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">u64 *&#160;</td>
+          <td class="paramname"><em>pos</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Seek to a position in a file. </p>
+<p>Firmware support: </p><table class="markdownTable">
+<tr class="markdownTableHead">
+<th class="markdownTableHeadNone">Firmware </th><th class="markdownTableHeadNone">Supported  </th></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone">CEX </td><td class="markdownTableBodyNone">✓  </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone">DEX </td><td class="markdownTableBodyNone">✓  </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone">DECR </td><td class="markdownTableBodyNone">✓  </td></tr>
+</table>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">fd</td><td>The file descriptor that points to the file to sink in </td></tr>
+    <tr><td class="paramname">offset</td><td>The offset to seek to </td></tr>
+    <tr><td class="paramname">whence</td><td>The direction to seek in </td></tr>
+    <tr><td class="paramname">pos</td><td>A pointer to a variable that the new position should be written to </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a290924e23700a501cf343a7dfcf7b493"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a290924e23700a501cf343a7dfcf7b493">&#9670;&nbsp;</a></span>sys_fs_mkdir()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">CellFsErrno sys_fs_mkdir </td>
+          <td>(</td>
+          <td class="paramtype">const char *&#160;</td>
+          <td class="paramname"><em>path</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">CellFsMode&#160;</td>
+          <td class="paramname"><em>mode</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Creates a directory. </p>
+<p>Firmware support: </p><table class="markdownTable">
+<tr class="markdownTableHead">
+<th class="markdownTableHeadNone">Firmware </th><th class="markdownTableHeadNone">Supported  </th></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone">CEX </td><td class="markdownTableBodyNone">✓  </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone">DEX </td><td class="markdownTableBodyNone">✓  </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone">DECR </td><td class="markdownTableBodyNone">✓  </td></tr>
+</table>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">path</td><td>The path of the new directory </td></tr>
+    <tr><td class="paramname">mode</td><td>The mode to create the new directory with </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a88fd1573b8452b7bf0f1f5a7f7754463"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a88fd1573b8452b7bf0f1f5a7f7754463">&#9670;&nbsp;</a></span>sys_fs_open()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">CellFsErrno sys_fs_open </td>
+          <td>(</td>
+          <td class="paramtype">const char *&#160;</td>
+          <td class="paramname"><em>path</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">u32&#160;</td>
+          <td class="paramname"><em>flags</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">u32 *&#160;</td>
+          <td class="paramname"><em>fd</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const void *&#160;</td>
+          <td class="paramname"><em>arg</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">u64&#160;</td>
+          <td class="paramname"><em>size</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Opens a file. </p>
+<p>Firmware support: </p><table class="markdownTable">
+<tr class="markdownTableHead">
+<th class="markdownTableHeadNone">Firmware </th><th class="markdownTableHeadNone">Supported  </th></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone">CEX </td><td class="markdownTableBodyNone">✓  </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone">DEX </td><td class="markdownTableBodyNone">✓  </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone">DECR </td><td class="markdownTableBodyNone">✓  </td></tr>
+</table>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">path</td><td>The path of the file to open </td></tr>
+    <tr><td class="paramname">flags</td><td>The flags to open the file with </td></tr>
+    <tr><td class="paramname">fd</td><td>The variable to write the resultant file descriptor to </td></tr>
+    <tr><td class="paramname">arg</td><td>Miscellaneous arguments </td></tr>
+    <tr><td class="paramname">size</td><td>Length of the miscellaneous arguments </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="ab4964b157afdd3a9432f28e722e0a718"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab4964b157afdd3a9432f28e722e0a718">&#9670;&nbsp;</a></span>sys_fs_read()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">CellFsErrno sys_fs_read </td>
+          <td>(</td>
+          <td class="paramtype">u32&#160;</td>
+          <td class="paramname"><em>fd</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">void *&#160;</td>
+          <td class="paramname"><em>buf</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">u64&#160;</td>
+          <td class="paramname"><em>nbytes</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">u64 *&#160;</td>
+          <td class="paramname"><em>nwritten</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Read from a file descriptor. </p>
+<p>Firmware support: </p><table class="markdownTable">
+<tr class="markdownTableHead">
+<th class="markdownTableHeadNone">Firmware </th><th class="markdownTableHeadNone">Supported  </th></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone">CEX </td><td class="markdownTableBodyNone">✓  </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone">DEX </td><td class="markdownTableBodyNone">✓  </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone">DECR </td><td class="markdownTableBodyNone">✓  </td></tr>
+</table>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">fd</td><td>The file descriptor </td></tr>
+    <tr><td class="paramname">buf</td><td>The buffer to write the data read from the file into </td></tr>
+    <tr><td class="paramname">nbytes</td><td>The length of 'buf' </td></tr>
+    <tr><td class="paramname">nwritten</td><td>The variable to write the actual number of bytes read to </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a68b84825f0061cbcc47b80790e6f77ca"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a68b84825f0061cbcc47b80790e6f77ca">&#9670;&nbsp;</a></span>sys_fs_rename()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">CellFsErrno sys_fs_rename </td>
+          <td>(</td>
+          <td class="paramtype">const char *&#160;</td>
+          <td class="paramname"><em>path</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const char *&#160;</td>
+          <td class="paramname"><em>to</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Rename a file. </p>
+<p>Firmware support: </p><table class="markdownTable">
+<tr class="markdownTableHead">
+<th class="markdownTableHeadNone">Firmware </th><th class="markdownTableHeadNone">Supported  </th></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone">CEX </td><td class="markdownTableBodyNone">✓  </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone">DEX </td><td class="markdownTableBodyNone">✓  </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone">DECR </td><td class="markdownTableBodyNone">✓  </td></tr>
+</table>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">path</td><td>The path of the file to rename </td></tr>
+    <tr><td class="paramname">to</td><td>The new path of the fail </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a83e5a1f551f06fa89c8aa763bc8c2743"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a83e5a1f551f06fa89c8aa763bc8c2743">&#9670;&nbsp;</a></span>sys_fs_unlink()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">CellFsErrno sys_fs_unlink </td>
+          <td>(</td>
+          <td class="paramtype">const char *&#160;</td>
+          <td class="paramname"><em>path</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Deletes a file. </p>
+<p>Firmware support: </p><table class="markdownTable">
+<tr class="markdownTableHead">
+<th class="markdownTableHeadNone">Firmware </th><th class="markdownTableHeadNone">Supported  </th></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone">CEX </td><td class="markdownTableBodyNone">✓  </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone">DEX </td><td class="markdownTableBodyNone">✓  </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone">DECR </td><td class="markdownTableBodyNone">✓  </td></tr>
+</table>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">path</td><td>The path of the file to delete </td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>
