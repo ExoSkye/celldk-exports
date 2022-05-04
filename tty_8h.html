@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.17"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>CellDK Exports: generated/syscalls/lv2_syscalls/include/syscalls.h File Reference</title>
+<title>CellDK Exports: generated/syscalls/tty_syscalls/include/tty.h File Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -62,86 +62,59 @@ $(function() {
 
 <div id="nav-path" class="navpath">
   <ul>
-<li class="navelem"><a class="el" href="dir_84fc5dba3506812825191c0c043e3c97.html">generated</a></li><li class="navelem"><a class="el" href="dir_ef903f3bafdc528ccbbe16f06a411081.html">syscalls</a></li><li class="navelem"><a class="el" href="dir_7247e4e024bdbcd2b37467f73e38b085.html">lv2_syscalls</a></li><li class="navelem"><a class="el" href="dir_e54c5d1120a34f3cf5ab03efa2c35d3f.html">include</a></li>  </ul>
+<li class="navelem"><a class="el" href="dir_84fc5dba3506812825191c0c043e3c97.html">generated</a></li><li class="navelem"><a class="el" href="dir_ef903f3bafdc528ccbbe16f06a411081.html">syscalls</a></li><li class="navelem"><a class="el" href="dir_56d436825c2128896db2570efa759494.html">tty_syscalls</a></li><li class="navelem"><a class="el" href="dir_e7a11595fb1f428d3be30cdfce130c3e.html">include</a></li>  </ul>
 </div>
 </div><!-- top -->
 <div class="header">
   <div class="summary">
 <a href="#func-members">Functions</a>  </div>
   <div class="headertitle">
-<div class="title">syscalls.h File Reference</div>  </div>
+<div class="title">tty.h File Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
 <div class="textblock"><code>#include &lt;ppu-types.h&gt;</code><br />
 </div>
-<p><a href="lv2__syscalls_2include_2syscalls_8h_source.html">Go to the source code of this file.</a></p>
+<p><a href="tty_8h_source.html">Go to the source code of this file.</a></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:a74d656709758c0173a0625111f9a3191"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="lv2__syscalls_2include_2syscalls_8h.html#a74d656709758c0173a0625111f9a3191">sys_process_get_sdk_version</a> (sys_pid_t pid, u32 *version)</td></tr>
-<tr class="memdesc:a74d656709758c0173a0625111f9a3191"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the SDK version of a process.  <a href="lv2__syscalls_2include_2syscalls_8h.html#a74d656709758c0173a0625111f9a3191">More...</a><br /></td></tr>
-<tr class="separator:a74d656709758c0173a0625111f9a3191"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:af1b464864f9fab6e0f260fdef4b4c225"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="lv2__syscalls_2include_2syscalls_8h.html#af1b464864f9fab6e0f260fdef4b4c225">sys_process_exit</a> (int ret)</td></tr>
-<tr class="memdesc:af1b464864f9fab6e0f260fdef4b4c225"><td class="mdescLeft">&#160;</td><td class="mdescRight">Exits the current process.  <a href="lv2__syscalls_2include_2syscalls_8h.html#af1b464864f9fab6e0f260fdef4b4c225">More...</a><br /></td></tr>
-<tr class="separator:af1b464864f9fab6e0f260fdef4b4c225"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ab320916c77f69cc63b6f7f88e6f82d62"><td class="memItemLeft" align="right" valign="top">sys_pid_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="lv2__syscalls_2include_2syscalls_8h.html#ab320916c77f69cc63b6f7f88e6f82d62">sys_process_getpid</a> ()</td></tr>
-<tr class="memdesc:ab320916c77f69cc63b6f7f88e6f82d62"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the PID of the current process.  <a href="lv2__syscalls_2include_2syscalls_8h.html#ab320916c77f69cc63b6f7f88e6f82d62">More...</a><br /></td></tr>
-<tr class="separator:ab320916c77f69cc63b6f7f88e6f82d62"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac2dc9fd4427c700a0969ffe78fd3ae53"><td class="memItemLeft" align="right" valign="top">s32&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="tty_8h.html#ac2dc9fd4427c700a0969ffe78fd3ae53">sys_tty_read</a> (u32 ch, void *buf, u32 len, u32 *preadlen)</td></tr>
+<tr class="memdesc:ac2dc9fd4427c700a0969ffe78fd3ae53"><td class="mdescLeft">&#160;</td><td class="mdescRight">Read from the tty.  <a href="tty_8h.html#ac2dc9fd4427c700a0969ffe78fd3ae53">More...</a><br /></td></tr>
+<tr class="separator:ac2dc9fd4427c700a0969ffe78fd3ae53"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7d2588023f66c8f89e4a5d7abf882b72"><td class="memItemLeft" align="right" valign="top">s32&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="tty_8h.html#a7d2588023f66c8f89e4a5d7abf882b72">sys_tty_write</a> (u32 ch, const void *buf, u32 len, u32 *preadlen)</td></tr>
+<tr class="memdesc:a7d2588023f66c8f89e4a5d7abf882b72"><td class="mdescLeft">&#160;</td><td class="mdescRight">Write to the tty.  <a href="tty_8h.html#a7d2588023f66c8f89e4a5d7abf882b72">More...</a><br /></td></tr>
+<tr class="separator:a7d2588023f66c8f89e4a5d7abf882b72"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Function Documentation</h2>
-<a id="af1b464864f9fab6e0f260fdef4b4c225"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#af1b464864f9fab6e0f260fdef4b4c225">&#9670;&nbsp;</a></span>sys_process_exit()</h2>
+<a id="ac2dc9fd4427c700a0969ffe78fd3ae53"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac2dc9fd4427c700a0969ffe78fd3ae53">&#9670;&nbsp;</a></span>sys_tty_read()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">int sys_process_exit </td>
+          <td class="memname">s32 sys_tty_read </td>
           <td>(</td>
-          <td class="paramtype">int&#160;</td>
-          <td class="paramname"><em>ret</em></td><td>)</td>
-          <td></td>
+          <td class="paramtype">u32&#160;</td>
+          <td class="paramname"><em>ch</em>, </td>
         </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Exits the current process. </p>
-<p>Firmware support: </p><table class="markdownTable">
-<tr class="markdownTableHead">
-<th class="markdownTableHeadNone">Firmware </th><th class="markdownTableHeadNone">Supported  </th></tr>
-<tr class="markdownTableRowOdd">
-<td class="markdownTableBodyNone">CEX </td><td class="markdownTableBodyNone">✓  </td></tr>
-<tr class="markdownTableRowEven">
-<td class="markdownTableBodyNone">DEX </td><td class="markdownTableBodyNone">✓  </td></tr>
-<tr class="markdownTableRowOdd">
-<td class="markdownTableBodyNone">DECR </td><td class="markdownTableBodyNone">✓  </td></tr>
-</table>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">ret</td><td>The return value </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a id="a74d656709758c0173a0625111f9a3191"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a74d656709758c0173a0625111f9a3191">&#9670;&nbsp;</a></span>sys_process_get_sdk_version()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
         <tr>
-          <td class="memname">int sys_process_get_sdk_version </td>
-          <td>(</td>
-          <td class="paramtype">sys_pid_t&#160;</td>
-          <td class="paramname"><em>pid</em>, </td>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">void *&#160;</td>
+          <td class="paramname"><em>buf</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">u32&#160;</td>
+          <td class="paramname"><em>len</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">u32 *&#160;</td>
-          <td class="paramname"><em>version</em>&#160;</td>
+          <td class="paramname"><em>preadlen</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -151,10 +124,7 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Returns the SDK version of a process. </p>
-<p>Required flags:</p><ul>
-<li>root</li>
-</ul>
+<p>Read from the tty. </p>
 <p>Firmware support: </p><table class="markdownTable">
 <tr class="markdownTableHead">
 <th class="markdownTableHeadNone">Firmware </th><th class="markdownTableHeadNone">Supported  </th></tr>
@@ -167,30 +137,55 @@ Functions</h2></td></tr>
 </table>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">pid</td><td>The PID of the process you want to get the SDK Version of </td></tr>
-    <tr><td class="paramname">version</td><td>The pointer to the u32 which the SDK Version will be written to </td></tr>
+    <tr><td class="paramname">ch</td><td>The TTY channel to read from </td></tr>
+    <tr><td class="paramname">buf</td><td>The buffer to read into </td></tr>
+    <tr><td class="paramname">len</td><td>The length of <code>buf</code> </td></tr>
+    <tr><td class="paramname">preadlen</td><td>Pointer to an u32 to put the amount of data read </td></tr>
   </table>
   </dd>
 </dl>
 
 </div>
 </div>
-<a id="ab320916c77f69cc63b6f7f88e6f82d62"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ab320916c77f69cc63b6f7f88e6f82d62">&#9670;&nbsp;</a></span>sys_process_getpid()</h2>
+<a id="a7d2588023f66c8f89e4a5d7abf882b72"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a7d2588023f66c8f89e4a5d7abf882b72">&#9670;&nbsp;</a></span>sys_tty_write()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">sys_pid_t sys_process_getpid </td>
+          <td class="memname">s32 sys_tty_write </td>
           <td>(</td>
-          <td class="paramname"></td><td>)</td>
+          <td class="paramtype">u32&#160;</td>
+          <td class="paramname"><em>ch</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
           <td></td>
+          <td class="paramtype">const void *&#160;</td>
+          <td class="paramname"><em>buf</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">u32&#160;</td>
+          <td class="paramname"><em>len</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">u32 *&#160;</td>
+          <td class="paramname"><em>preadlen</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
         </tr>
       </table>
 </div><div class="memdoc">
 
-<p>Gets the PID of the current process. </p>
+<p>Write to the tty. </p>
 <p>Firmware support: </p><table class="markdownTable">
 <tr class="markdownTableHead">
 <th class="markdownTableHeadNone">Firmware </th><th class="markdownTableHeadNone">Supported  </th></tr>
@@ -201,6 +196,15 @@ Functions</h2></td></tr>
 <tr class="markdownTableRowOdd">
 <td class="markdownTableBodyNone">DECR </td><td class="markdownTableBodyNone">✓  </td></tr>
 </table>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">ch</td><td>The TTY channel to write to </td></tr>
+    <tr><td class="paramname">buf</td><td>The buffer to write to the tty </td></tr>
+    <tr><td class="paramname">len</td><td>The length of <code>buf</code> </td></tr>
+    <tr><td class="paramname">preadlen</td><td>Pointer to an u32 to put the amount of data written </td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>

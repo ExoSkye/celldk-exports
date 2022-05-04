@@ -1,6 +1,6 @@
 var searchData=
 [
-  ['export_2',['EXPORT',['../libexport_8c.html#aded94ade4faa16cb027d3a26f9694dd4',1,'libexport.c']]],
+  ['export_2',['EXPORT',['../libexport_8c.html#aded94ade4faa16cb027d3a26f9694dd4',1,'EXPORT():&#160;libexport.c'],['../lv2__sprx_2exports_8h.html#a4e86583a800c89a4c237fa33497b16dd',1,'EXPORT(SysProcessExit, 0xE6F2C1E7):&#160;exports.h'],['../sysfs__sprx_2exports_8h.html#a3b8f89fba462dd838274d59669b16569',1,'EXPORT(SysFsMkdir, 0xBA901FE6):&#160;exports.h'],['../sysfs__sprx_2exports_8h.html#a3428e2e091fdb1a8c344643edaae2fef',1,'EXPORT(SysFsUnlink, 0x7F4677A8):&#160;exports.h'],['../sysfs__sprx_2exports_8h.html#a72fb20429dd63c55abbc210bfcc985e9',1,'EXPORT(SysFsRead, 0x4D5FF8E2):&#160;exports.h'],['../sysfs__sprx_2exports_8h.html#a1d0f7e356509e154a978b9230196707e',1,'EXPORT(SysFsOpen, 0x718BF5F8):&#160;exports.h'],['../sysfs__sprx_2exports_8h.html#ab8ca11a10a38c5a87294a8a1eaf9ad3d',1,'EXPORT(SysFsRename, 0xF12EECC8):&#160;exports.h'],['../sysfs__sprx_2exports_8h.html#ad692c43dc9a56515e327cbee8a789d95',1,'EXPORT(SysFsClose, 0x2CB51F0D):&#160;exports.h'],['../sysfs__sprx_2exports_8h.html#a5abee5a00256d5d77e0052f2bda78265',1,'EXPORT(SysFsLseek, 0xA397D042):&#160;exports.h']]],
   ['export_5fva_3',['EXPORT_VA',['../libexport_8c.html#a50c53c4da3aa10d599b7d042124fccd3',1,'libexport.c']]],
   ['exports_2eh_4',['exports.h',['../lv2__sprx_2exports_8h.html',1,'(Global Namespace)'],['../sysfs__sprx_2exports_8h.html',1,'(Global Namespace)']]]
 ];
