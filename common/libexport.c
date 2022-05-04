@@ -1,6 +1,6 @@
 // Stolen from PSL1GHT
 
-#include "config.h"
+#include <config.h>
 #include <stdint.h>
 
 typedef struct {

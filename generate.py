@@ -98,28 +98,32 @@ def c_generator():
 
     cmake_syscall_file = inspect.cleandoc("""
     cmake_minimum_required(VERSION 3.0)
-    project({}_syscalls LANGUAGES C ASM)
+    project({} LANGUAGES C ASM)
     
     if(CMAKE_TOOLCHAIN_FILE STREQUAL "")
         message(FATAL_ERROR "The CellDK Toolchain File must be used to build this library")
     endif()
     
-    add_library({}_syscalls STATIC syscalls.h syscalls.S)
+    add_library({} STATIC include/{}.h syscalls.S)
+    target_include_directories({} PUBLIC .)
+    install(TARGETS {} DESTINATION {})
     """)
 
     cmake_sprx_file = inspect.cleandoc("""
     cmake_minimum_required(VERSION 3.0)
-    project({}_sprx LANGUAGES C)
+    project({} LANGUAGES C)
     
     if(CMAKE_TOOLCHAIN_FILE STREQUAL "")
         message(FATAL_ERROR "The CellDK Toolchain File must be used to build this library")
     endif()
     
-    add_library({}_sprx STATIC ../common/export.S ../common/libexport.c)
+    add_library({} STATIC ../common/export.S ../common/libexport.c include/{}.h)
+    target_include_directories({} PUBLIC .)
+    install(TARGETS {} DESTINATION {})
     """)
 
     sprx_def_file = inspect.cleandoc("""
-    EXPORT({}, {})
+    EXPORT({}, {});
     """)
 
     sprx_config_file = inspect.cleandoc("""
@@ -144,14 +148,14 @@ def c_generator():
                     search_dirs[lib_def["path"]] = []
 
                 if "syscall" in lib_def["lib_type"]:
-                    sc_lib = Library(f"{lib_def['name']}_syscalls", LibType.Syscall, "include/syscalls.h")
+                    sc_lib = Library(f"{lib_def['name']}_syscalls", LibType.Syscall, f"include/{lib_def['name']}.h")
                     generated_libraries[sc_lib.name] = sc_lib
                     generated_libraries[sc_lib.name].files["CMakeLists.txt"] = cmake_syscall_file.format(
-                        sc_lib.name, sc_lib.name, "{}"
+                        sc_lib.name, sc_lib.name, lib_def['name'], sc_lib.name, sc_lib.name, "${CELLDK_ROOT}"
                     )
 
                     generated_libraries[sc_lib.name].files["syscalls.S"] = ""
-                    generated_libraries[sc_lib.name].files["include/syscalls.h"] = "#include <ppu-types.h>\n\n"
+                    generated_libraries[sc_lib.name].files[f"include/{lib_def['name']}.h"] = "#include <ppu-types.h>\n\n"
 
                     search_dirs[lib_def["path"]].append(sc_lib.name)
 
@@ -159,7 +163,7 @@ def c_generator():
                     sprx_lib = Library(f"{lib_def['name']}_sprx", LibType.SPRX, f"include/{lib_def['name']}.h")
                     generated_libraries[sprx_lib.name] = sprx_lib
                     generated_libraries[sprx_lib.name].files["CMakeLists.txt"] = cmake_sprx_file.format(
-                        sprx_lib.name, sprx_lib.name, "{}"
+                        sprx_lib.name, sprx_lib.name, lib_def['name'], sprx_lib.name, sprx_lib.name, "${CELLDK_ROOT}"
                     )
 
                     generated_libraries[sprx_lib.name].files["exports.h"] = ""
@@ -177,7 +181,6 @@ def c_generator():
             for file in files:
                 if file.split(".")[-1] == "json":
                     with open(os.path.join(root, file)) as f:
-
                         print(f"Parsing {file}")
 
                         spec = json.load(f)
@@ -318,20 +321,29 @@ def json_upgrade():
             run(['clang-format', '-i', os.path.join(root, file)])
 
 
+def clean_generated():
+    try:
+        shutil.rmtree("generated")
+    except:
+        pass
+
+
 def json_generator(argv):
     if sys.argv[1] == "upgrade":
         json_upgrade()
+    elif sys.argv[1] == "clean":
+        clean_generated()
     else:
         if sys.argv[1] != "add":
             fname = sys.argv[1]
         else:
             fname = ask_param("File name")
 
-        func_name = ask_param("Function name", default=f"sys_{fname[:-5]}")
+        func_name = ask_param("Function name", default=f"sys_{fname.split('/')[-1][:-5]}")
 
         spec = {
             "name": func_name,
-            "id": int(ask_param("ID")),
+            "ids": {},
             "returns": ask_param("Return type", default="void"),
             "brief": ask_param("Description"),
             "class": ask_param("Class", default=f"{'_'.join(func_name.split('_')[:2])}"),
@@ -339,6 +351,16 @@ def json_generator(argv):
             "flags": [],
             "firmwares": []
         }
+
+        if fnid := ask_param("SPRX Export ID", no_response=True) is not None:
+            spec["ids"]["sprx_id"] = fnid
+
+        if scid := ask_param("Syscall ID", no_response=True) is not None:
+            spec["ids"]["syscall_id"] = int(scid)
+
+        if len(spec["ids"].keys()) == 0:
+            print("At least one type of ID is required, exiting")
+            return
 
         i = 0
 
@@ -380,7 +402,7 @@ def json_generator(argv):
 
 
 if __name__ == '__main__':
-    if len(sys.argv) != 1:
+    if len(sys.argv) > 1:
         json_generator(sys.argv)
     else:
         c_generator()

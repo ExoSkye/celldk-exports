@@ -1,6 +1,6 @@
 // Stolen from PSL1GHT
 
-#include "config.h"
+#include <config.h>
 #include <ppc-asm.h>
 
 #define GP_ARG_MIN_REG 3

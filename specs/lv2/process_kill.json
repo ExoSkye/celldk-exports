@@ -1,0 +1,22 @@
+{
+  "name": "sys_process_kill",
+  "ids": {
+    "syscall_id": 19
+  },
+  "returns": "int",
+  "brief": "Kill a process",
+  "class": "sys_process",
+  "params": [
+    {
+      "name": "pid",
+      "type": "sys_pid_t",
+      "description": "The PID of the process to kill"
+    }
+  ],
+  "flags": [],
+  "firmwares": [
+    "CEX",
+    "DEX",
+    "DECR"
+  ]
+}
