@@ -1,15 +1,4 @@
 cmake_minimum_required(VERSION 3.0)
-project(ps3dk-syscalls ASM C)
+project(celldk-exports C ASM)
 
-file(GLOB_RECURSE SPEC_FILES LIST_DIRECTORIES false RELATIVE specs **.json)
-
-add_custom_command(
-        OUTPUT ${CMAKE_SOURCE_DIR}/generated/syscalls.S ${CMAKE_SOURCE_DIR}/generated/syscalls.h
-        WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}
-        COMMAND python3 ${CMAKE_SOURCE_DIR}/generate.py
-        DEPENDS ${SPEC_FILES} generate.py
-)
-
-add_library(ps3dk-syscalls ${CMAKE_SOURCE_DIR}/generated/syscalls.S ${CMAKE_SOURCE_DIR}/generated/syscalls.h)
-
-add_subdirectory(test_project)
+add_subdirectory(generated)

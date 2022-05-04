@@ -1,0 +1,5 @@
+{
+  "name": "tty",
+  "path": "tty",
+  "lib_type": ["syscall"]
+}

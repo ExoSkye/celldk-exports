@@ -1,0 +1,10 @@
+{
+  "name": "sysfs",
+  "path": "fs",
+  "lib_type": ["syscall", "sprx"],
+  "sprx_info": {
+    "symbol": "sys_fs",
+    "header1": "0x2c000001",
+    "header2": "0x0009"
+  }
+}

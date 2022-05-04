@@ -2,7 +2,7 @@
   "name": "sys_fs_lseek",
   "ids": {
     "syscall_id": 818,
-    "prx_id": "0xA397D042"
+    "sprx_id": "0xA397D042"
   },
   "returns": "CellFsErrno",
   "brief": "Seek to a position in a file",

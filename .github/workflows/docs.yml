@@ -10,22 +10,21 @@ env:
   BUILD_TYPE: Release
 
 jobs:
-  build:
-    name: Build
+  docs:
+    name: Build Docs
     runs-on: ubuntu-latest
 
     steps:
     - uses: actions/checkout@v3
 
     - name: Install dependencies
-      run: pip3 install -r requirements.txt
+      run: |
+       pip3 install -r requirements.txt
+       sudo apt-get install doxygen clang-format -y
+      
 
     - name: Generate files
       run: python3 generate.py
-      
-    - name: Install Doxygen
-      run: sudo apt-get install doxygen -y
-      shell: bash
 
     - name: Generate Doxygen Documentation
       run: doxygen
