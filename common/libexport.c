@@ -22,7 +22,7 @@ extern uint32_t LIBRARY_SYMBOL __attribute__((section(".rodata.sceFNID")));
 static const void* scefstub[0] __attribute__((section(".data.sceFStub." LIBRARY_NAME)));
 
 static const uint32_t version __attribute__((section(".rodata.sceResident"))) = 0;
-static const const char name[] __attribute__((section(".rodata.sceResident"))) = LIBRARY_NAME;
+static const char name[] __attribute__((section(".rodata.sceResident"))) = LIBRARY_NAME;
 
 static prx_header header __attribute__((section(".lib.stub"))) = {
     LIBRARY_HEADER_1,
