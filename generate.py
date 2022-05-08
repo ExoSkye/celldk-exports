@@ -106,7 +106,9 @@ def c_generator():
     
     add_library({} STATIC include/{}.h syscalls.S)
     target_include_directories({} PUBLIC .)
-    install(TARGETS {} DESTINATION {})
+    
+    install(TARGETS {} DESTINATION {}/ppu/lib/)
+    install(FILES include/{}.h DESTINATION {}/ppu/include/syscalls/)
     """)
 
     cmake_sprx_file = inspect.cleandoc("""
@@ -119,7 +121,9 @@ def c_generator():
     
     add_library({} STATIC ../common/export.S ../common/libexport.c include/{}.h)
     target_include_directories({} PUBLIC .)
-    install(TARGETS {} DESTINATION {})
+    
+    install(TARGETS {} DESTINATION {}/ppu/lib/)
+    install(FILES include/{}.h DESTINATION {}/ppu/include/sprx/)
     """)
 
     sprx_def_file = inspect.cleandoc("""
@@ -151,7 +155,7 @@ def c_generator():
                     sc_lib = Library(f"{lib_def['name']}_syscalls", LibType.Syscall, f"include/{lib_def['name']}.h")
                     generated_libraries[sc_lib.name] = sc_lib
                     generated_libraries[sc_lib.name].files["CMakeLists.txt"] = cmake_syscall_file.format(
-                        sc_lib.name, sc_lib.name, lib_def['name'], sc_lib.name, sc_lib.name, "${CELLDK_ROOT}"
+                        sc_lib.name, sc_lib.name, lib_def['name'], sc_lib.name, sc_lib.name, "${CELLDK_ROOT}", lib_def['name'], "${CELLDK_ROOT}"
                     )
 
                     generated_libraries[sc_lib.name].files["syscalls.S"] = ""
@@ -163,7 +167,7 @@ def c_generator():
                     sprx_lib = Library(f"{lib_def['name']}_sprx", LibType.SPRX, f"include/{lib_def['name']}.h")
                     generated_libraries[sprx_lib.name] = sprx_lib
                     generated_libraries[sprx_lib.name].files["CMakeLists.txt"] = cmake_sprx_file.format(
-                        sprx_lib.name, sprx_lib.name, lib_def['name'], sprx_lib.name, sprx_lib.name, "${CELLDK_ROOT}"
+                        sprx_lib.name, sprx_lib.name, lib_def['name'], sprx_lib.name, sprx_lib.name, "${CELLDK_ROOT}", lib_def['name'], "${CELLDK_ROOT}"
                     )
 
                     generated_libraries[sprx_lib.name].files["exports.h"] = ""
