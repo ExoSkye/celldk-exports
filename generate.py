@@ -64,7 +64,8 @@ class Library:
         for file in self.files.keys():
             with open(os.path.join(prefix, self.name, file), "w") as f:
                 f.write(self.files[file])
-                run(['clang-format', '-i', os.path.join(prefix, self.name, file)])
+                if file != "CMakeLists.txt":
+                    run(['clang-format', '-i', os.path.join(prefix, self.name, file)])
 
 
 def c_generator():
@@ -155,11 +156,13 @@ def c_generator():
                     sc_lib = Library(f"{lib_def['name']}_syscalls", LibType.Syscall, f"include/{lib_def['name']}.h")
                     generated_libraries[sc_lib.name] = sc_lib
                     generated_libraries[sc_lib.name].files["CMakeLists.txt"] = cmake_syscall_file.format(
-                        sc_lib.name, sc_lib.name, lib_def['name'], sc_lib.name, sc_lib.name, "${CELLDK_ROOT}", lib_def['name'], "${CELLDK_ROOT}"
+                        sc_lib.name, sc_lib.name, lib_def['name'], sc_lib.name, sc_lib.name, "${CELLDK_ROOT}",
+                        lib_def['name'], "${CELLDK_ROOT}"
                     )
 
                     generated_libraries[sc_lib.name].files["syscalls.S"] = ""
-                    generated_libraries[sc_lib.name].files[f"include/{lib_def['name']}.h"] = "#include <ppu-types.h>\n\n"
+                    generated_libraries[sc_lib.name].files[
+                        f"include/{lib_def['name']}.h"] = "#include <ppu-types.h>\n\n"
 
                     search_dirs[lib_def["path"]].append(sc_lib.name)
 
@@ -167,7 +170,8 @@ def c_generator():
                     sprx_lib = Library(f"{lib_def['name']}_sprx", LibType.SPRX, f"include/{lib_def['name']}.h")
                     generated_libraries[sprx_lib.name] = sprx_lib
                     generated_libraries[sprx_lib.name].files["CMakeLists.txt"] = cmake_sprx_file.format(
-                        sprx_lib.name, sprx_lib.name, lib_def['name'], sprx_lib.name, sprx_lib.name, "${CELLDK_ROOT}", lib_def['name'], "${CELLDK_ROOT}"
+                        sprx_lib.name, sprx_lib.name, lib_def['name'], sprx_lib.name, sprx_lib.name, "${CELLDK_ROOT}",
+                        lib_def['name'], "${CELLDK_ROOT}"
                     )
 
                     generated_libraries[sprx_lib.name].files["exports.h"] = ""
@@ -176,7 +180,8 @@ def c_generator():
                         lib_def["sprx_info"]["header1"], lib_def["sprx_info"]["header2"],
                     )
 
-                    generated_libraries[sprx_lib.name].files[f"include/{lib_def['name']}.h"] = "#include <ppu-types.h>\n\n"
+                    generated_libraries[sprx_lib.name].files[
+                        f"include/{lib_def['name']}.h"] = "#include <ppu-types.h>\n\n"
 
                     search_dirs[lib_def["path"]].append(sprx_lib.name)
 
@@ -249,9 +254,6 @@ def c_generator():
                                     spec['name'],
                                     spec['ids']['syscall_id']
                                 ) + "\n"
-
-                        
-
 
     try:
         os.mkdir("generated")
